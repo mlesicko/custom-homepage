@@ -1,0 +1,137 @@
+body {
+	padding: 10px;
+	margin: 0px auto;
+	max-width: 1050px;
+	font-family: serif;
+}
+
+.btn-secondary {
+	background-color: red;
+	border-color: red;
+	font-weight: bold;
+}
+
+.btn-secondary:hover, .btn-secondary:active, .btn-secondary:focus {
+	background-color: #A00;
+	border-color: #A00;
+}
+
+.page-title {
+	font-size: 48px;
+	text-align: center;
+}
+
+.page-title>.red-part {
+	color: white;
+	background-color: red;
+	border-radius: 15px;
+	padding: 0px 3px;
+}
+
+.category-title-container {
+	display: flex;
+	margin: 10px 0px 5px;
+	width: 100%;
+}
+
+.category-title {
+	font-size: 24px;
+}
+
+.category-button {
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 4px;
+	font-size: 20px;
+	visibility: hidden;
+	cursor: pointer;
+}
+
+.category-button.disabled {
+	color: lightgray;
+	cursor: default;
+}
+
+.category-delete-button {
+	font-size: 20px;
+	margin-top: 4px;
+	margin-right: 10px;
+	visibility: hidden;
+}
+
+.category-title-container:hover .category-button {
+	visibility: visible;
+}
+
+.category-title-line {
+	width: 100%;
+	height: 1px;
+	background-color: black;
+}
+
+.category {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.add-category-button {
+	margin: 100px auto;
+}
+
+.icon {
+	width: 100px;
+	height: 100px;
+}
+
+.channel {
+	display: inline-block;
+	margin: 10px 10px;
+	width: 150px;
+}
+
+.channel-title {
+	text-align: center;
+}
+
+.channel-links {
+	text-align: center;
+	font-size: 15px;
+}
+
+.channel-links a {
+	padding: 0px 3px;
+}
+
+.channel .img-container {
+	width: 100px;
+	height: 100px;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+}
+
+.channel .delete-button, .channel .edit-button {
+	position: absolute;
+	top: 3px;
+	width: 25px;
+	height: 25px;
+	background-color: #000A;
+	color: white;
+	text-align: center;
+	line-height: 25px;
+	border-radius: 2px;
+	visibility: hidden;
+}
+
+.channel .edit-button {
+	right: 31px;
+}
+
+.channel .delete-button {
+	right: 3px;
+}
+
+.channel:hover .delete-button, .channel:hover .edit-button {
+	visibility: visible;
+}
+

@@ -1,0 +1,16 @@
+export const ADD_CHANNEL = "ADD_CHANNEL";
+export const EDIT_CHANNEL = "EDIT_CHANNEL";
+export const DELETE_CHANNEL = "DELETE_CHANNEL";
+export const ADD_CATEGORY = "ADD_CATEGORY";
+export const EDIT_CATEGORY = "EDIT_CATEGORY";
+export const DELETE_CATEGORY = "DELETE_CATEGORY";
+export const CATEGORY_TYPES = [
+	ADD_CHANNEL,
+	EDIT_CHANNEL,
+	DELETE_CHANNEL,
+	ADD_CATEGORY,
+	EDIT_CATEGORY,
+	DELETE_CATEGORY
+];
+
+export const isCategoryModalType = (type) => CATEGORY_TYPES.includes(type);
