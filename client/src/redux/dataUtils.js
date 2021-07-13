@@ -81,11 +81,27 @@ export const deleteChannel = (data, categoryIndex, channelIndex) => {
 export const moveChannel = (
     data,
     categoryIndex,
+	newCategoryIndex,
     oldChannelIndex,
     newChannelIndex
 ) => {
-    const category = data.categories[categoryIndex];
-    const channels = [...category.channels];
-    channels.splice(newChannelIndex, 0, channels.splice(oldChannelIndex, 1)[0]);
-    return updateCategory(data, categoryIndex, {...category, channels});
+	if (categoryIndex === newCategoryIndex) {
+		const category = data.categories[categoryIndex];
+		const channels = [...category.channels];
+		channels.splice(newChannelIndex, 0, channels.splice(oldChannelIndex, 1)[0]);
+		return updateCategory(data, categoryIndex, {...category, channels});
+	} else {
+		const oldCategory = data.categories[categoryIndex];
+		const channels = [...oldCategory.channels];
+		const [channel] = channels.splice(oldChannelIndex, 1);
+		data = updateCategory(data, categoryIndex, {...oldCategory, channels});
+		const newCategory = data.categories[newCategoryIndex];
+		const newChannels = [...newCategory.channels];
+		newChannels.splice(newChannelIndex, 0, channel);
+		data = updateCategory(data, newCategoryIndex, {
+			...newCategory,
+			channels: newChannels
+		});
+		return data;
+	}
 }

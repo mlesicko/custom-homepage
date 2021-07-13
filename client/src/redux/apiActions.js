@@ -36,6 +36,7 @@ export const deleteChannel = (data, categoryIdx, channelIdx) =>
 export const updateChannel = (
 	data,
 	categoryIdx,
+	newCategoryIdx,
 	oldChannelIdx,
 	newChannelIdx,
 	channel,
@@ -43,6 +44,7 @@ export const updateChannel = (
 	dataUtils.moveChannel(
 		dataUtils.updateChannel(data, categoryIdx, oldChannelIdx, channel),
 		categoryIdx,
+		newCategoryIdx,
 		oldChannelIdx,
 		newChannelIdx
 	)
