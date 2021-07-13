@@ -7,6 +7,19 @@ const PORT = process.env.PORT || 3001;
 
 const db = new JsonDB(new Config("data", true, true, "/"));
 
+/* Set up database if this is the first run */
+
+const initial_data = {
+	categories: []
+};
+
+const data = db.getData("/");
+if (Object.keys(data).length === 0) {
+	db.push("/", initial_data);
+}
+
+/* Server logic */
+
 const app = express();
 
 app.use(express.json());
