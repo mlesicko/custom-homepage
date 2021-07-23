@@ -32,75 +32,75 @@ export const moveCategory = (data, oldCategoryIndex, newCategoryIndex) => {
     return {...data, categories};
 }
 
-export const addChannel = (data, categoryIndex, newChannel) => {
+export const addSite = (data, categoryIndex, newSite) => {
     const category = data.categories[categoryIndex];
     return updateCategory (data, categoryIndex,
         {
             ...category,
-            channels: [
-                ...category.channels,
-                newChannel
+            sites: [
+                ...category.sites,
+                newSite
             ]
         }
     );
 };
 
-export const updateChannel = (
+export const updateSite = (
     data,
     categoryIndex,
-    channelIndex,
-    updatedChannel
+    siteIndex,
+    updatedSite
 ) => {
     const category = data.categories[categoryIndex];
     return updateCategory (data, categoryIndex,
         {
             ...category,
-            channels: [
-                ...category.channels.slice(0, channelIndex),
-                updatedChannel,
-                ...category.channels.slice(channelIndex + 1)
+            sites: [
+                ...category.sites.slice(0, siteIndex),
+                updatedSite,
+                ...category.sites.slice(siteIndex + 1)
             ]
         }
     );
 
 };
 
-export const deleteChannel = (data, categoryIndex, channelIndex) => {
+export const deleteSite = (data, categoryIndex, siteIndex) => {
     const category = data.categories[categoryIndex];
     return updateCategory (data, categoryIndex,
         {
             ...category,
-            channels: [
-                ...category.channels.slice(0, channelIndex),
-                ...category.channels.slice(channelIndex + 1)
+            sites: [
+                ...category.sites.slice(0, siteIndex),
+                ...category.sites.slice(siteIndex + 1)
             ]
         }
     );
 };
 
-export const moveChannel = (
+export const moveSite = (
     data,
     categoryIndex,
 	newCategoryIndex,
-    oldChannelIndex,
-    newChannelIndex
+    oldSiteIndex,
+    newSiteIndex
 ) => {
 	if (categoryIndex === newCategoryIndex) {
 		const category = data.categories[categoryIndex];
-		const channels = [...category.channels];
-		channels.splice(newChannelIndex, 0, channels.splice(oldChannelIndex, 1)[0]);
-		return updateCategory(data, categoryIndex, {...category, channels});
+		const sites = [...category.sites];
+		sites.splice(newSiteIndex, 0, sites.splice(oldSiteIndex, 1)[0]);
+		return updateCategory(data, categoryIndex, {...category, sites});
 	} else {
 		const oldCategory = data.categories[categoryIndex];
-		const channels = [...oldCategory.channels];
-		const [channel] = channels.splice(oldChannelIndex, 1);
-		data = updateCategory(data, categoryIndex, {...oldCategory, channels});
+		const sites = [...oldCategory.sites];
+		const [site] = sites.splice(oldSiteIndex, 1);
+		data = updateCategory(data, categoryIndex, {...oldCategory, sites});
 		const newCategory = data.categories[newCategoryIndex];
-		const newChannels = [...newCategory.channels];
-		newChannels.splice(newChannelIndex, 0, channel);
+		const newSites = [...newCategory.sites];
+		newSites.splice(newSiteIndex, 0, site);
 		data = updateCategory(data, newCategoryIndex, {
 			...newCategory,
-			channels: newChannels
+			sites: newSites
 		});
 		return data;
 	}

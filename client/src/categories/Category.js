@@ -12,14 +12,14 @@ import {
 import {
 	openEditCategoryModal,
 	openDeleteCategoryModal,
-	openAddChannelModal
+	openAddSiteModal
 } from "../redux/modalActions";
 import { moveCategory } from "../redux/apiActions";
-import Channel from "./Channel";
+import Site from "./Site";
 
 const Category = ({
 	category, categoryIndex, 
-	openEditModal, openDeleteModal, openAddChannelModal,
+	openEditModal, openDeleteModal, openAddSiteModal,
 	isFirst, isLast,
 	moveCategoryUp, moveCategoryDown,
 }) => (
@@ -32,8 +32,8 @@ const Category = ({
 				alt="Edit Category" title="Edit Category">
 				<FontAwesomeIcon icon={faPencilAlt} />
 			</div>
-			<div className="category-button" onClick={openAddChannelModal}
-				alt="Add Channel" title="Add Channel">
+			<div className="category-button" onClick={openAddSiteModal}
+				alt="Add Site" title="Add Site">
 				<FontAwesomeIcon icon={faPlus} />
 			</div>
 			<div style={{flexGrow: "1"}} />
@@ -64,12 +64,12 @@ const Category = ({
 			</div>
 		</div>
 		<div className="category-title-line" />
-		{ category.channels.map((channel, idx) => 
-			<Channel
+		{ category.sites.map((site, idx) => 
+			<Site
 				key={idx}
-				channel={channel}
+				site={site}
 				categoryIndex={categoryIndex}
-				channelIndex={idx}
+				siteIndex={idx}
 			/>
 		)}
 	</div>
@@ -78,7 +78,7 @@ const Category = ({
 const mapDispatchToProps = (dispatch, {data, categoryIndex}) => ({
 	openEditModal: () => dispatch(openEditCategoryModal(categoryIndex)),	
 	openDeleteModal: () => dispatch(openDeleteCategoryModal(categoryIndex)),
-	openAddChannelModal: () => dispatch(openAddChannelModal(categoryIndex)),
+	openAddSiteModal: () => dispatch(openAddSiteModal(categoryIndex)),
 	moveCategoryUp: () =>
 		dispatch(moveCategory(data, categoryIndex, categoryIndex - 1)),
 	moveCategoryDown: () =>

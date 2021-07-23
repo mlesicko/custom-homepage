@@ -6,18 +6,18 @@ import {
 	ModalBody,
 	ModalFooter,
 } from "reactstrap";
-import { updateChannel } from "../../redux/apiActions";
+import { updateSite } from "../../redux/apiActions";
 import ModalInput from "../ModalInput";
 
-class EditChannelModal extends React.Component {
+class EditSiteModal extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			name: props.channel.name,
-			url: props.channel.url,
-			icon: props.channel.icon,
+			name: props.site.name,
+			url: props.site.url,
+			icon: props.site.icon,
 			category: props.categoryIndex,
-			order: props.channelIndex + 1,
+			order: props.siteIndex + 1,
 		};
 	}
 
@@ -35,7 +35,7 @@ class EditChannelModal extends React.Component {
 		this.state.order !== "";
 
 	submit = () => {
-		this.props.updateChannel(
+		this.props.updateSite(
 			{
 				name: this.state.name,
 				url: this.state.url,
@@ -55,7 +55,7 @@ class EditChannelModal extends React.Component {
 		return (
 			<div>
 				<ModalHeader>
-					Editing Channel { this.props.channel.name }
+					Editing Site { this.props.site.name }
 				</ModalHeader>
 				<ModalBody>
 					<ModalInput
@@ -99,17 +99,17 @@ class EditChannelModal extends React.Component {
 	}
 }
 
-const mapDispatchToProps = (dispatch, {data, categoryIndex, channelIndex}) => ({
-    updateChannel: (channel, newChannelIndex, newCategoryIndex) => dispatch(
-		updateChannel(
+const mapDispatchToProps = (dispatch, {data, categoryIndex, siteIndex}) => ({
+    updateSite: (site, newSiteIndex, newCategoryIndex) => dispatch(
+		updateSite(
 			data, 
 			categoryIndex, 
 			newCategoryIndex,
-			channelIndex, 
-			newChannelIndex,
-			channel
+			siteIndex, 
+			newSiteIndex,
+			site
 		)
 	)
 });
 
-export default connect(null, mapDispatchToProps)(EditChannelModal);
+export default connect(null, mapDispatchToProps)(EditSiteModal);

@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Button, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { deleteChannel } from "../../redux/apiActions";
+import { deleteSite } from "../../redux/apiActions";
 
-class DeleteChannelModal extends React.Component {
+class DeleteSiteModal extends React.Component {
 	submit = () => {
-		this.props.deleteChannel();
+		this.props.deleteSite();
 		this.props.close();
 	};
 
@@ -14,7 +14,7 @@ class DeleteChannelModal extends React.Component {
 			<div>
 				<ModalHeader>
 					Are you sure you want to delete {
-						this.props.channel.name
+						this.props.site.name
 					}?
 				</ModalHeader>
 				<ModalBody>
@@ -29,9 +29,9 @@ class DeleteChannelModal extends React.Component {
 	}
 };
 
-const mapDispatchToProps = (dispatch, {data, categoryIndex, channelIndex}) => ({
-    deleteChannel: () =>
-		dispatch(deleteChannel(data, categoryIndex, channelIndex))
+const mapDispatchToProps = (dispatch, {data, categoryIndex, siteIndex}) => ({
+    deleteSite: () =>
+		dispatch(deleteSite(data, categoryIndex, siteIndex))
 });
 
-export default connect(null, mapDispatchToProps)(DeleteChannelModal);
+export default connect(null, mapDispatchToProps)(DeleteSiteModal);

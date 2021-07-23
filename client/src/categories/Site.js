@@ -3,12 +3,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { connect } from "react-redux";
 
-import { openEditChannelModal, openDeleteChannelModal } from "../redux/modalActions";
+import { openEditSiteModal, openDeleteSiteModal } from "../redux/modalActions";
 
 const VIDEOS_SUFFIX = "/videos";
 const PLAYLISTS_SUFFIX = "/playlists?view=1&sort=lad&flow=grid";
 
-class Channel extends React.Component {
+const YOUTUBE_CHANNEL_PATTERN =
+	/https?:\/\/(?:www\.)?youtu(?:\.be|be\.com)\/(?:channel|c|user)\/.+/;
+
+class Site extends React.Component {
 	onEditClicked = (event) => {
 		this.props.openEditModal();
 		event.preventDefault();	
@@ -19,35 +22,42 @@ class Channel extends React.Component {
 		event.preventDefault();	
 	}
 
+	isYouTubeChannel = () => YOUTUBE_CHANNEL_PATTERN.test(this.props.site.url);
+
+	getBaseLink = () =>
+		this.props.site.url + (this.isYouTubeChannel() ? VIDEOS_SUFFIX : "");
+
 	render(){
 		return(
-			<div className="channel">
-				<NewTabLink url={this.props.channel.url + VIDEOS_SUFFIX}>
+			<div className="site">
+				<NewTabLink url={this.getBaseLink()}>
 					<div className="img-container">
 						<img
 							className="icon"
-							src={this.props.channel.icon} alt="" />
+							src={this.props.site.icon} alt="" />
 						<div className="edit-button" onClick={this.onEditClicked}
-							alt="Edit Channel" title="Edit Channel">
+							alt="Edit Site" title="Edit Site">
 							<FontAwesomeIcon icon={faPencilAlt} />
 						</div>
 						<div className="delete-button" onClick={this.onDeleteClicked}
-							alt="Delete Channel" title="Delete Channel">
+							alt="Delete Site" title="Delete Site">
 							<FontAwesomeIcon icon={faTrash} />
 						</div>
 					</div>
 				</NewTabLink>
-				<div className="channel-title">
-					{this.props.channel.name}{" "}
+				<div className="site-title">
+					{this.props.site.name}{" "}
 				</div>
-				<div className="channel-links">
-					<NewTabLink url={this.props.channel.url + VIDEOS_SUFFIX}>
-						Videos
-					</NewTabLink>
-					<NewTabLink url={this.props.channel.url + PLAYLISTS_SUFFIX}>
-						Playlists
-					</NewTabLink>
-				</div>
+				{ this.isYouTubeChannel() &&
+					<div className="site-links">
+						<NewTabLink url={this.props.site.url + VIDEOS_SUFFIX}>
+							Videos
+						</NewTabLink>
+						<NewTabLink url={this.props.site.url + PLAYLISTS_SUFFIX}>
+							Playlists
+						</NewTabLink>
+					</div>
+				}
 			</div>
 		);
 	}
@@ -61,11 +71,11 @@ const NewTabLink = ({url, children}) => (
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
 	openEditModal: () => dispatch(
-		openEditChannelModal(ownProps.categoryIndex, ownProps.channelIndex)
+		openEditSiteModal(ownProps.categoryIndex, ownProps.siteIndex)
 	),
 	openDeleteModal: () => dispatch(
-		openDeleteChannelModal(ownProps.categoryIndex, ownProps.channelIndex)
+		openDeleteSiteModal(ownProps.categoryIndex, ownProps.siteIndex)
 	),
 })
 
-export default connect(null, mapDispatchToProps)(Channel);
+export default connect(null, mapDispatchToProps)(Site);

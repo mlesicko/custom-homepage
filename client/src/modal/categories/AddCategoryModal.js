@@ -24,7 +24,7 @@ class AddCategoryModal extends React.Component {
 	submit = () => {
 		this.props.addCategory(
 			{
-				channels: [],
+				sites: [],
 				name: this.state.name
 			}
 		);

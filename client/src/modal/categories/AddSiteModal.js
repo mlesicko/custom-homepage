@@ -1,10 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Button, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { addChannel } from "../../redux/apiActions";
+import { addSite } from "../../redux/apiActions";
 import ModalInput from "../ModalInput";
 
-class AddChannelModal extends React.Component {
+class AddSiteModal extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -20,7 +20,7 @@ class AddChannelModal extends React.Component {
 		this.state.name !== "" && this.state.url !== "" && this.state.icon !== "";
 
 	submit = () => {
-		this.props.addChannel(
+		this.props.addSite(
 			{
 				name: this.state.name,
 				url: this.state.url,
@@ -34,7 +34,7 @@ class AddChannelModal extends React.Component {
 		return (
 			<div>
 				<ModalHeader>
-					New Channel
+					New Site
 				</ModalHeader>
 				<ModalBody>
 					<ModalInput
@@ -64,9 +64,9 @@ class AddChannelModal extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch, {data, categoryIndex}) => ({
-    addChannel: (channel) => 
-		dispatch(addChannel(data, categoryIndex, channel))
+    addSite: (site) => 
+		dispatch(addSite(data, categoryIndex, site))
 });
 
-export default connect(null, mapDispatchToProps)(AddChannelModal);
+export default connect(null, mapDispatchToProps)(AddSiteModal);
 

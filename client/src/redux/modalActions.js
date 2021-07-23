@@ -1,37 +1,37 @@
 import { OPEN_MODAL, CLOSE_MODAL } from './actionTypes';
 import {
-	ADD_CHANNEL,
-	EDIT_CHANNEL,
-	DELETE_CHANNEL,
+	ADD_SITE,
+	EDIT_SITE,
+	DELETE_SITE,
 	ADD_CATEGORY,
 	EDIT_CATEGORY,
 	DELETE_CATEGORY
 } from '../modal/modalTypes';
 
-export const openAddChannelModal = (category) => ({
+export const openAddSiteModal = (category) => ({
 	type: OPEN_MODAL,
 	payload: {
-		type: ADD_CHANNEL,
+		type: ADD_SITE,
 		category: category,
-		channel: -1,
+		site: -1,
 	}
 })
 
-export const openEditChannelModal = (category, channel) => ({
+export const openEditSiteModal = (category, site) => ({
 	type: OPEN_MODAL,
 	payload: {
-		type: EDIT_CHANNEL,
+		type: EDIT_SITE,
 		category: category,
-		channel: channel,
+		site: site,
 	}
 })
 
-export const openDeleteChannelModal = (category, channel) => ({
+export const openDeleteSiteModal = (category, site) => ({
 	type: OPEN_MODAL,
 	payload: {
-		type: DELETE_CHANNEL,
+		type: DELETE_SITE,
 		category: category,
-		channel: channel,
+		site: site,
 	}
 })
 
@@ -40,7 +40,7 @@ export const openAddCategoryModal = () => ({
 	payload: {
 		type: ADD_CATEGORY,
 		category: -1,
-		channel: -1,
+		site: -1,
 	}
 })
 
@@ -49,7 +49,7 @@ export const openEditCategoryModal = (category) => ({
 	payload: {
 		type: EDIT_CATEGORY,
 		category: category,
-		channel: -1,
+		site: -1,
 	}
 })
 
@@ -58,7 +58,7 @@ export const openDeleteCategoryModal = (category) => ({
 	payload: {
 		type: DELETE_CATEGORY,
 		category: category,
-		channel: -1,
+		site: -1,
 	}
 })
 

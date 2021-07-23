@@ -27,26 +27,26 @@ export const deleteCategory = (data, categoryIdx) =>
 export const moveCategory = (data, oldCategoryIdx, newCategoryIdx) => 
 	pushData(dataUtils.moveCategory(data, oldCategoryIdx, newCategoryIdx));
 
-export const addChannel = (data, categoryIdx, newChannel) => 
-	pushData(dataUtils.addChannel(data, categoryIdx, newChannel));
+export const addSite = (data, categoryIdx, newSite) => 
+	pushData(dataUtils.addSite(data, categoryIdx, newSite));
 
-export const deleteChannel = (data, categoryIdx, channelIdx) =>
-	pushData(dataUtils.deleteChannel(data, categoryIdx, channelIdx));
+export const deleteSite = (data, categoryIdx, siteIdx) =>
+	pushData(dataUtils.deleteSite(data, categoryIdx, siteIdx));
 
-export const updateChannel = (
+export const updateSite = (
 	data,
 	categoryIdx,
 	newCategoryIdx,
-	oldChannelIdx,
-	newChannelIdx,
-	channel,
+	oldSiteIdx,
+	newSiteIdx,
+	site,
 ) => pushData(
-	dataUtils.moveChannel(
-		dataUtils.updateChannel(data, categoryIdx, oldChannelIdx, channel),
+	dataUtils.moveSite(
+		dataUtils.updateSite(data, categoryIdx, oldSiteIdx, site),
 		categoryIdx,
 		newCategoryIdx,
-		oldChannelIdx,
-		newChannelIdx
+		oldSiteIdx,
+		newSiteIdx
 	)
 );
 		

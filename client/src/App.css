@@ -83,26 +83,26 @@ body {
 	height: 100px;
 }
 
-.channel {
+.site {
 	display: inline-block;
 	margin: 10px 10px;
 	width: 150px;
 }
 
-.channel-title {
+.site-title {
 	text-align: center;
 }
 
-.channel-links {
+.site-links {
 	text-align: center;
 	font-size: 15px;
 }
 
-.channel-links a {
+.site-links a {
 	padding: 0px 3px;
 }
 
-.channel .img-container {
+.site .img-container {
 	width: 100px;
 	height: 100px;
 	margin-left: auto;
@@ -110,7 +110,7 @@ body {
 	position: relative;
 }
 
-.channel .delete-button, .channel .edit-button {
+.site .delete-button, .site .edit-button {
 	position: absolute;
 	top: 3px;
 	width: 25px;
@@ -123,15 +123,15 @@ body {
 	visibility: hidden;
 }
 
-.channel .edit-button {
+.site .edit-button {
 	right: 31px;
 }
 
-.channel .delete-button {
+.site .delete-button {
 	right: 3px;
 }
 
-.channel:hover .delete-button, .channel:hover .edit-button {
+.site:hover .delete-button, .site:hover .edit-button {
 	visibility: visible;
 }
 
