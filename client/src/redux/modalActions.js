@@ -5,7 +5,8 @@ import {
 	DELETE_SITE,
 	ADD_CATEGORY,
 	EDIT_CATEGORY,
-	DELETE_CATEGORY
+	DELETE_CATEGORY,
+	EDIT_TITLE
 } from '../modal/modalTypes';
 
 export const openAddSiteModal = (category) => ({
@@ -59,6 +60,13 @@ export const openDeleteCategoryModal = (category) => ({
 		type: DELETE_CATEGORY,
 		category: category,
 		site: -1,
+	}
+})
+
+export const openEditTitleModal = () => ({
+	type: OPEN_MODAL,
+	payload: {
+		type: EDIT_TITLE,
 	}
 })
 

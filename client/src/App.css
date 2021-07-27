@@ -19,13 +19,11 @@ body {
 .page-title {
 	font-size: 48px;
 	text-align: center;
-}
-
-.page-title>.red-part {
-	color: white;
-	background-color: red;
-	border-radius: 15px;
-	padding: 0px 3px;
+	width: min-content;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	padding: 0px 30px;
 }
 
 .category-title-container {
@@ -135,3 +133,15 @@ body {
 	visibility: visible;
 }
 
+.edit-title-button {
+	right: 3px;
+	top: 10px;
+	position: absolute;
+	font-size: 18px;
+	visibility: hidden;
+	cursor: pointer;
+}
+
+.page-title:hover .edit-title-button {
+	visibility: visible;
+}

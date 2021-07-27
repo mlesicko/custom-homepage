@@ -1,6 +1,5 @@
 import { UPDATE_DATA } from './actionTypes';
 import * as dataUtils from "./dataUtils";
-	
 
 export const getData = () => {
 	return (dispatch) => {
@@ -49,8 +48,14 @@ export const updateSite = (
 		newSiteIdx
 	)
 );
-		
 
+export const updateTitle = (
+	data,
+	newTitle
+) => pushData({
+	...data,
+	title: newTitle
+});
 
 const pushData = (data) => {
 	return (dispatch) => {

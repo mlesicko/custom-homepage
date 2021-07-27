@@ -2,15 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { Button } from "reactstrap";
 
-import { getData } from "../redux/apiActions";
 import { openAddCategoryModal } from "../redux/modalActions";
 import Category from "./Category";
 
 class CategoryList extends React.Component {
-	componentDidMount() {
-		this.props.getData();
-	}
-
 	render() {
 		return (
 			<div style={{display: "grid"}}>
@@ -41,7 +36,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	getData: () => dispatch(getData()),
 	openAddCategoryModal: () => dispatch(openAddCategoryModal())
 });
 

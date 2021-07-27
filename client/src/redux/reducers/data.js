@@ -1,7 +1,8 @@
 import { UPDATE_DATA } from '../actionTypes';
 
 const initialState = {
-	categories: []
+	categories: [],
+	title: null
 }
 
 const reducer = (state=initialState, action) => {
@@ -9,7 +10,8 @@ const reducer = (state=initialState, action) => {
 		case UPDATE_DATA: {
 			return {
 				...state,
-				categories: action.payload.categories
+				categories: action.payload.categories,
+				title: action.payload.title
 			};
 		}
 		default: {

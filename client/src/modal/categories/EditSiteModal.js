@@ -79,7 +79,7 @@ class EditSiteModal extends React.Component {
 						onChange={this.onCategoryChange}
 					>
 						{ this.getCategories().map((category)=>
-							<option>{category}</option>)
+							<option key={category}>{category}</option>)
 						}
 					</ModalInput>
 					<ModalInput

@@ -2,13 +2,16 @@ import React from "react";
 import { connect } from "react-redux";
 import { Modal } from "reactstrap";
 import { closeModal } from "../redux/modalActions";
-import { isCategoryModalType } from './modalTypes';
+import { isCategoryModalType, EDIT_TITLE } from './modalTypes';
+import EditTitleModal from "./EditTitleModal";
 import CategoryModalWrapper from "./categories/CategoryModalWrapper";
 
 class ModalWrapper extends React.Component {
 	getModalType = () => {
 		if (isCategoryModalType(this.props.type)) {
 			return CategoryModalWrapper;
+		} else if (this.props.type === EDIT_TITLE) {
+			return EditTitleModal;
 		} else {
 			return null;
 		}
