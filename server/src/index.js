@@ -14,8 +14,8 @@ const initial_data = {
 	title: {
 		part_1: "Home",
 		part_2: "Page",
-		bg_color: "red",
-		text_color: "white",
+		bg_color: "#FF0000",
+		text_color: "#FFFFFF",
 		page_title: "Custom Homepage"
 	}
 };

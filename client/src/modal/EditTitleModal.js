@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Button, ModalBody, ModalFooter } from "reactstrap";
 import { updateTitle } from "../redux/apiActions";
 import ModalInput from "./ModalInput";
 
@@ -40,11 +40,20 @@ class EditTitleModal extends React.Component {
 	}
 
 	render() {
+		const span_style = {
+			color: this.state.text_color,
+			backgroundColor: this.state.bg_color
+		};
 		return (
 			<div>
-				<ModalHeader>
-					Editing Page Title
-				</ModalHeader>
+				<div>
+					<div className="page-title">
+						{this.state.part_1}
+						<span className="page-title-colored-part" style={span_style}>
+							{this.state.part_2}
+						</span>
+					</div>
+				</div>
 				<ModalBody>
 					<ModalInput
 						placeholder="Part 1"
@@ -55,10 +64,12 @@ class EditTitleModal extends React.Component {
 						value={this.state.part_2}
 						onChange={this.onChange("part_2")} />
 					<ModalInput
+						type="color"
 						placeholder="Background Color"
 						value={this.state.bg_color}
 						onChange={this.onChange("bg_color")} />
 					<ModalInput
+						type="color"
 						placeholder="Text Color"
 						value={this.state.text_color}
 						onChange={this.onChange("text_color")} />

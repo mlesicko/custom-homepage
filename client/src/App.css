@@ -26,6 +26,11 @@ body {
 	padding: 0px 30px;
 }
 
+.page-title-colored-part {
+	border-radius: 15px;
+	padding: 0px 3px;
+}
+
 .category-title-container {
 	display: flex;
 	margin: 10px 0px 5px;
