@@ -14,11 +14,37 @@ class App extends React.Component {
 		this.props.getData();
 	}
 
+	innerContent = () => {
+		if (this.props.loading) {
+			return (
+				<div className="loading-msg">Loading...</div>
+			);
+		} else if (this.props.error) {
+			return (
+				<>
+					<div className="error-msg-1">
+						Error: Could not load data.
+					</div>
+					<div className="error-msg-2">
+						Please check that the server is running.
+					</div>
+				</>
+			);
+		} else {
+			return (
+				<>
+					<PageTitle />
+					<CategoryList />
+				</>
+			);
+		}
+	}
+
 	render() {
+		console.log(this.props);
 		return (
 			<ModalWrapper>
-				<PageTitle />
-				<CategoryList />
+				{this.innerContent()}
 			</ModalWrapper>
 		);
 	}
@@ -29,4 +55,9 @@ const mapDispatchToProps = (dispatch) => ({
 	getData: () => dispatch(getData())
 });
 
-export default connect(null, mapDispatchToProps)(App);
+const mapStateToProps = (state) => ({
+	loading: state.data.loading,
+	error: state.data.error
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

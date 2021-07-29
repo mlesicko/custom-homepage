@@ -1,16 +1,16 @@
-import { UPDATE_DATA } from './actionTypes';
+import { LOADING_DATA, UPDATE_DATA, DATA_LOAD_FAILED } from './actionTypes';
 import * as dataUtils from "./dataUtils";
 
 export const getData = () => {
 	return (dispatch) => {
+		dispatch(loadData())
 		fetch("/api/data")
 			.then((res) => res.json())
 			.then((data) =>
-				dispatch({
-					type: UPDATE_DATA,
-					payload: data
-				})
-			);
+				dispatch(updateData(data))
+			).catch((e) => {
+				dispatch(dataLoadFailed(e))
+			});
 	}
 };
 
@@ -67,10 +67,23 @@ const pushData = (data) => {
 			body: JSON.stringify(data)
 		}).then((res) => res.json())
 			.then((data) =>
-				dispatch({
-					type: UPDATE_DATA,
-					payload: data
-				})
-			)
+				dispatch(updateData(data))
+			).catch((e) => {
+				dispatch(dataLoadFailed(e))
+			});
 	};	
 };
+
+const loadData = () => ({
+	type: LOADING_DATA
+});
+
+const updateData = (data) => ({
+	type: UPDATE_DATA,
+	payload: data
+});
+
+const dataLoadFailed = (error) => ({
+	type: DATA_LOAD_FAILED,
+	payload: error
+});

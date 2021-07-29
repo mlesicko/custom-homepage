@@ -150,3 +150,21 @@ body {
 .page-title:hover .edit-title-button {
 	visibility: visible;
 }
+
+.error-msg-1 {
+	color: red;
+	margin-top: 100px;
+	font-size: 24px;
+	text-align: center;
+}
+
+.error-msg-2 {
+	color: red;
+	text-align: center;
+}
+
+.loading-msg {
+	text-align: center;
+	margin-top: 100px;
+	font-size: 24px;
+}
