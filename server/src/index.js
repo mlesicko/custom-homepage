@@ -10,14 +10,15 @@ const db = new JsonDB(new Config("data", true, true, "/"));
 /* Set up database if this is the first run */
 
 const initial_data = {
-	categories: [],
 	title: {
 		part_1: "Home",
 		part_2: "Page",
 		bg_color: "#FF0000",
 		text_color: "#FFFFFF",
 		page_title: "Custom Homepage"
-	}
+	},
+	siteCategories: [],
+	taskCategories: []
 };
 
 const data = db.getData("/");

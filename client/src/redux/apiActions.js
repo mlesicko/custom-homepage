@@ -14,17 +14,17 @@ export const getData = () => {
 	}
 };
 
-export const addCategory = (data, newCategory) =>
-	pushData(dataUtils.addCategory(data, newCategory));
+export const addSiteCategory = (data, newCategory) =>
+	pushData(dataUtils.addSiteCategory(data, newCategory));
 
-export const updateCategory = (data, categoryIdx, updatedCategory) => 
-	pushData(dataUtils.updateCategory(data, categoryIdx, updatedCategory));
+export const updateSiteCategory = (data, categoryIdx, updatedCategory) => 
+	pushData(dataUtils.updateSiteCategory(data, categoryIdx, updatedCategory));
 
-export const deleteCategory = (data, categoryIdx) =>
-	pushData(dataUtils.deleteCategory(data, categoryIdx));
+export const deleteSiteCategory = (data, categoryIdx) =>
+	pushData(dataUtils.deleteSiteCategory(data, categoryIdx));
 
-export const moveCategory = (data, oldCategoryIdx, newCategoryIdx) => 
-	pushData(dataUtils.moveCategory(data, oldCategoryIdx, newCategoryIdx));
+export const moveSiteCategory = (data, oldCategoryIdx, newCategoryIdx) => 
+	pushData(dataUtils.moveSiteCategory(data, oldCategoryIdx, newCategoryIdx));
 
 export const addSite = (data, categoryIdx, newSite) => 
 	pushData(dataUtils.addSite(data, categoryIdx, newSite));
@@ -46,6 +46,41 @@ export const updateSite = (
 		newCategoryIdx,
 		oldSiteIdx,
 		newSiteIdx
+	)
+);
+
+export const addTaskCategory = (data, newCategory) =>
+	pushData(dataUtils.addTaskCategory(data, newCategory));
+
+export const updateTaskCategory = (data, categoryIdx, updatedCategory) => 
+	pushData(dataUtils.updateTaskCategory(data, categoryIdx, updatedCategory));
+
+export const deleteTaskCategory = (data, categoryIdx) =>
+	pushData(dataUtils.deleteTaskCategory(data, categoryIdx));
+
+export const moveTaskCategory = (data, oldCategoryIdx, newCategoryIdx) => 
+	pushData(dataUtils.moveTaskCategory(data, oldCategoryIdx, newCategoryIdx));
+
+export const addTask = (data, categoryIdx, newTask) => 
+	pushData(dataUtils.addTask(data, categoryIdx, newTask));
+
+export const deleteTask = (data, categoryIdx, taskIdx) =>
+	pushData(dataUtils.deleteTask(data, categoryIdx, taskIdx));
+
+export const updateTask = (
+	data,
+	categoryIdx,
+	newCategoryIdx,
+	oldTaskIdx,
+	newTaskIdx,
+	task,
+) => pushData(
+	dataUtils.moveTask(
+		dataUtils.updateTask(data, categoryIdx, oldTaskIdx, task),
+		categoryIdx,
+		newCategoryIdx,
+		oldTaskIdx,
+		newTaskIdx
 	)
 );
 

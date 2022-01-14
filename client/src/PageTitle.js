@@ -2,6 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import { openEditTitleModal } from "./redux/modalActions";
 
@@ -13,10 +14,12 @@ const PageTitle = ({title, openEditTitleModal}) => {
 	};
 	return (
 		<div className="page-title">
-			{title?.part_1}
-			<span className="page-title-colored-part" style={span_style}>
-				{title?.part_2}
-			</span>
+			<Link to="/" style={{textDecoration: "none", color: "unset"}}>
+				{title?.part_1}
+				<span className="page-title-colored-part" style={span_style}>
+					{title?.part_2}
+				</span>
+			</Link>
 			<div className="edit-title-button" onClick={openEditTitleModal}
 				alt="Edit Page Title" title="Edit Page Title">
 				<FontAwesomeIcon icon={faPencilAlt} />
@@ -26,7 +29,7 @@ const PageTitle = ({title, openEditTitleModal}) => {
 };
 
 const mapStateToProps = (state) => ({
-	title: state.data?.title
+	title: state.data?.content?.title
 });
 
 const mapDispatchToProps = (dispatch) => ({

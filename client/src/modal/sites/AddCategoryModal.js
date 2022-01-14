@@ -6,7 +6,7 @@ import {
 	ModalBody,
 	ModalFooter,
 } from "reactstrap";
-import { addCategory } from "../../redux/apiActions";
+import { addSiteCategory } from "../../redux/apiActions";
 import ModalInput from "../ModalInput";
 
 class AddCategoryModal extends React.Component {
@@ -22,9 +22,9 @@ class AddCategoryModal extends React.Component {
 	valid = () => this.state.name !== "";
 	
 	submit = () => {
-		this.props.addCategory(
+		this.props.addSiteCategory(
 			{
-				sites: [],
+				elements: [],
 				name: this.state.name
 			}
 		);
@@ -55,7 +55,7 @@ class AddCategoryModal extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch, {data}) => ({
-	addCategory: (category) => dispatch(addCategory(data, category))
+	addSiteCategory: (category) => dispatch(addSiteCategory(data, category))
 });
 
 export default connect(null, mapDispatchToProps)(AddCategoryModal);

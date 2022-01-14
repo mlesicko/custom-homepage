@@ -1,8 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import PageTitle from "./PageTitle";
-import CategoryList from "./categories/CategoryList";
+import CustomHomepageRoutes from "./CustomHomepageRoutes";
 import ModalWrapper from "./modal/ModalWrapper";
 
 import { getData } from "./redux/apiActions";
@@ -15,7 +14,7 @@ class App extends React.Component {
 	}
 
 	innerContent = () => {
-		if (this.props.loading) {
+		if (this.props.loading || this.props.content === null) {
 			return (
 				<div className="loading-msg">Loading...</div>
 			);
@@ -32,16 +31,12 @@ class App extends React.Component {
 			);
 		} else {
 			return (
-				<>
-					<PageTitle />
-					<CategoryList />
-				</>
+				<CustomHomepageRoutes />
 			);
 		}
 	}
 
 	render() {
-		console.log(this.props);
 		return (
 			<ModalWrapper>
 				{this.innerContent()}
@@ -57,7 +52,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
 	loading: state.data.loading,
-	error: state.data.error
+	error: state.data.error,
+	content: state.data.content,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

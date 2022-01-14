@@ -1,8 +1,7 @@
 import { LOADING_DATA, UPDATE_DATA, DATA_LOAD_FAILED } from '../actionTypes';
 
 const initialState = {
-	categories: [],
-	title: null,
+	content: null,
 	loading: false,
 	error: null
 }
@@ -18,8 +17,7 @@ const reducer = (state=initialState, action) => {
 		case UPDATE_DATA: {
 			return {
 				...state,
-				categories: action.payload.categories,
-				title: action.payload.title,
+				content: action.payload,
 				loading: false
 			};
 		}

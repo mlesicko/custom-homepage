@@ -22,10 +22,10 @@ class Site extends React.Component {
 		event.preventDefault();	
 	}
 
-	isYouTubeChannel = () => YOUTUBE_CHANNEL_PATTERN.test(this.props.site.url);
+	isYouTubeChannel = () => YOUTUBE_CHANNEL_PATTERN.test(this.props.element.url);
 
 	getBaseLink = () =>
-		this.props.site.url + (this.isYouTubeChannel() ? VIDEOS_SUFFIX : "");
+		this.props.element.url + (this.isYouTubeChannel() ? VIDEOS_SUFFIX : "");
 
 	render(){
 		return(
@@ -34,7 +34,7 @@ class Site extends React.Component {
 					<div className="img-container">
 						<img
 							className="icon"
-							src={this.props.site.icon} alt="" />
+							src={this.props.element.icon} alt="" />
 						<div className="edit-button" onClick={this.onEditClicked}
 							alt="Edit Site" title="Edit Site">
 							<FontAwesomeIcon icon={faPencilAlt} />
@@ -46,14 +46,14 @@ class Site extends React.Component {
 					</div>
 				</NewTabLink>
 				<div className="site-title">
-					{this.props.site.name}{" "}
+					{this.props.element.name}{" "}
 				</div>
 				{ this.isYouTubeChannel() &&
 					<div className="site-links">
-						<NewTabLink url={this.props.site.url + VIDEOS_SUFFIX}>
+						<NewTabLink url={this.props.element.url + VIDEOS_SUFFIX}>
 							Videos
 						</NewTabLink>
-						<NewTabLink url={this.props.site.url + PLAYLISTS_SUFFIX}>
+						<NewTabLink url={this.props.element.url + PLAYLISTS_SUFFIX}>
 							Playlists
 						</NewTabLink>
 					</div>
@@ -71,10 +71,10 @@ const NewTabLink = ({url, children}) => (
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
 	openEditModal: () => dispatch(
-		openEditSiteModal(ownProps.categoryIndex, ownProps.siteIndex)
+		openEditSiteModal(ownProps.categoryIndex, ownProps.elementIndex)
 	),
 	openDeleteModal: () => dispatch(
-		openDeleteSiteModal(ownProps.categoryIndex, ownProps.siteIndex)
+		openDeleteSiteModal(ownProps.categoryIndex, ownProps.elementIndex)
 	),
 })
 

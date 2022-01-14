@@ -4,9 +4,9 @@ import {
     ADD_SITE,
     EDIT_SITE,
     DELETE_SITE,
-    ADD_CATEGORY,
-    EDIT_CATEGORY,
-    DELETE_CATEGORY
+    ADD_SITE_CATEGORY,
+    EDIT_SITE_CATEGORY,
+    DELETE_SITE_CATEGORY
 } from '../modalTypes';
 import AddSiteModal from "./AddSiteModal";
 import EditSiteModal from "./EditSiteModal";
@@ -24,11 +24,11 @@ class ModalWrapper extends React.Component {
 				return EditSiteModal;
 			case DELETE_SITE:
 				return DeleteSiteModal;
-			case ADD_CATEGORY:
+			case ADD_SITE_CATEGORY:
 				return AddCategoryModal;
-			case EDIT_CATEGORY:
+			case EDIT_SITE_CATEGORY:
 				return EditCategoryModal;
-			case DELETE_CATEGORY:
+			case DELETE_SITE_CATEGORY:
 				return DeleteCategoryModal;
 			default:
 				return null;
@@ -37,8 +37,8 @@ class ModalWrapper extends React.Component {
 
 	render() {
 		const ModalContent = this.getModalContent()
-		const category = this.props.data.categories[this.props.categoryIndex];
-		const site = category?.sites?.[this.props.siteIndex];
+		const category = this.props.data.siteCategories[this.props.categoryIndex];
+		const site = category?.elements?.[this.props.siteIndex];
 		return (
 			<ModalContent
 				data={this.props.data}
@@ -53,10 +53,10 @@ class ModalWrapper extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-	data: state.data,
+	data: state.data.content,
 	type: state.modalState.type,
 	categoryIndex: state.modalState.category,
-	siteIndex: state.modalState.site
+	siteIndex: state.modalState.element
 });
 
 export default connect(mapStateToProps)(ModalWrapper);

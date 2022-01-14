@@ -1,7 +1,14 @@
 import React from "react";
 import { Input, Label, Collapse } from "reactstrap";
 
-const ModalInput = ({ placeholder, value, onChange, children, type="text" }) => (
+const ModalInput = ({
+	placeholder,
+	value,
+	onChange,
+	children,
+	type="text",
+	rows=1
+}) => (
 	<div>
 		<Collapse isOpen={value !== ""}>
 			<Label for={placeholder}>{placeholder}</Label>
@@ -11,7 +18,8 @@ const ModalInput = ({ placeholder, value, onChange, children, type="text" }) => 
 			id={placeholder}
 			placeholder={placeholder}
 			value={value}
-			onChange={onChange}>
+			onChange={onChange}
+			rows={rows}>
 			{children}
 		</Input>
 	</div>

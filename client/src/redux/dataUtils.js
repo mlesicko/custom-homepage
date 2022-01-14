@@ -1,107 +1,145 @@
-export const addCategory = (data, newCategory) => ({
+const addCategory = (type) => (data, newCategory) => ({
     ...data,
-    categories: [
-        ...data.categories,
+    [type]: [
+        ...data[type],
 		{
         	...newCategory,
-			id: Math.max(...data.categories.map(c => c.id)) + 1
+			id: Math.max(...data[type].map(c => c.id)) + 1
 		}
     ]
 });
 
-export const updateCategory = (data, categoryIndex, updatedCategory) => ({
+const updateCategory = (type) => (data, categoryIndex, updatedCategory) => ({
 	...data,
-	categories: [
-		...data.categories.slice(0, categoryIndex),
+	[type]: [
+		...data[type].slice(0, categoryIndex),
 		updatedCategory,
-		...data.categories.slice(categoryIndex + 1)
+		...data[type].slice(categoryIndex + 1)
 	]
 });
 
-export const deleteCategory = (data, categoryIndex) => ({
+const deleteCategory = (type) => (data, categoryIndex) => ({
     ...data,
-    categories: [
-        ...data.categories.slice(0, categoryIndex),
-        ...data.categories.slice(categoryIndex + 1)
+    [type]: [
+        ...data[type].slice(0, categoryIndex),
+        ...data[type].slice(categoryIndex + 1)
     ]
 });
 
-export const moveCategory = (data, oldCategoryIndex, newCategoryIndex) => {
-    const categories = [...data.categories];
+const moveCategory = (type) => (data, oldCategoryIndex, newCategoryIndex) => {
+    const categories = [...data[type]];
     categories.splice(newCategoryIndex, 0, categories.splice(oldCategoryIndex, 1)[0]);
-    return {...data, categories};
+    return {
+		...data, 
+		[type]: categories
+	};
 }
 
-export const addSite = (data, categoryIndex, newSite) => {
-    const category = data.categories[categoryIndex];
-    return updateCategory (data, categoryIndex,
+const addElement = (type) => (
+	data,
+	categoryIndex,
+	newElement
+) => {
+    const category = data[type][categoryIndex];
+    return updateCategory(type)(data, categoryIndex,
         {
             ...category,
-            sites: [
-                ...category.sites,
-                newSite
+            elements: [
+                ...category.elements,
+                newElement
             ]
         }
     );
 };
 
-export const updateSite = (
+const updateElement = (type) => (
     data,
     categoryIndex,
-    siteIndex,
-    updatedSite
+    elementIndex,
+    updatedElement
 ) => {
-    const category = data.categories[categoryIndex];
-    return updateCategory (data, categoryIndex,
+    const category = data[type][categoryIndex];
+    return updateCategory(type)(data, categoryIndex,
         {
             ...category,
-            sites: [
-                ...category.sites.slice(0, siteIndex),
-                updatedSite,
-                ...category.sites.slice(siteIndex + 1)
+            elements: [
+                ...category.elements.slice(0, elementIndex),
+                updatedElement,
+                ...category.elements.slice(elementIndex + 1)
             ]
         }
     );
 
 };
 
-export const deleteSite = (data, categoryIndex, siteIndex) => {
-    const category = data.categories[categoryIndex];
-    return updateCategory (data, categoryIndex,
+const deleteElement = (type) => (
+	data,
+	categoryIndex,
+	elementIndex
+) => {
+    const category = data[type][categoryIndex];
+    return updateCategory(type)(data, categoryIndex,
         {
             ...category,
-            sites: [
-                ...category.sites.slice(0, siteIndex),
-                ...category.sites.slice(siteIndex + 1)
+            elements: [
+                ...category.elements.slice(0, elementIndex),
+                ...category.elements.slice(elementIndex + 1)
             ]
         }
     );
 };
 
-export const moveSite = (
+const moveElement = (type) => (
     data,
     categoryIndex,
 	newCategoryIndex,
-    oldSiteIndex,
-    newSiteIndex
+    oldElementIndex,
+    newElementIndex
 ) => {
 	if (categoryIndex === newCategoryIndex) {
-		const category = data.categories[categoryIndex];
-		const sites = [...category.sites];
-		sites.splice(newSiteIndex, 0, sites.splice(oldSiteIndex, 1)[0]);
-		return updateCategory(data, categoryIndex, {...category, sites});
+		const category = data[type][categoryIndex];
+		const elements = [...category.elements];
+		elements.splice(newElementIndex, 0, elements.splice(oldElementIndex, 1)[0]);
+		return updateCategory(type)(data, categoryIndex, {
+			...category,
+			elements
+		});
 	} else {
-		const oldCategory = data.categories[categoryIndex];
-		const sites = [...oldCategory.sites];
-		const [site] = sites.splice(oldSiteIndex, 1);
-		data = updateCategory(data, categoryIndex, {...oldCategory, sites});
-		const newCategory = data.categories[newCategoryIndex];
-		const newSites = [...newCategory.sites];
-		newSites.splice(newSiteIndex, 0, site);
-		data = updateCategory(data, newCategoryIndex, {
+		const oldCategory = data[type][categoryIndex];
+		const elements = [...oldCategory.elements];
+		const [element] = elements.splice(oldElementIndex, 1);
+		console.log(elements);
+		data = updateCategory(type)(data, categoryIndex, {
+			...oldCategory,
+			elements
+		});
+		console.log(data[type][categoryIndex]);
+		const newCategory = data[type][newCategoryIndex];
+		const newElements = [...newCategory.elements];
+		newElements.splice(newElementIndex, 0, element);
+		data = updateCategory(type)(data, newCategoryIndex, {
 			...newCategory,
-			sites: newSites
+			elements: newElements
 		});
 		return data;
 	}
 }
+
+export const addSiteCategory = addCategory("siteCategories");
+export const updateSiteCategory = updateCategory("siteCategories");
+export const deleteSiteCategory = deleteCategory("siteCategories");
+export const moveSiteCategory = moveCategory("siteCategories");
+export const addSite = addElement("siteCategories");
+export const updateSite = updateElement("siteCategories");
+export const deleteSite = deleteElement("siteCategories");
+export const moveSite = moveElement("siteCategories");
+
+export const addTaskCategory = addCategory("taskCategories");
+export const updateTaskCategory = updateCategory("taskCategories");
+export const deleteTaskCategory = deleteCategory("taskCategories");
+export const moveTaskCategory = moveCategory("taskCategories");
+export const addTask = addElement("taskCategories");
+export const updateTask = updateElement("taskCategories");
+export const deleteTask = deleteElement("taskCategories");
+export const moveTask = moveElement("taskCategories");
+

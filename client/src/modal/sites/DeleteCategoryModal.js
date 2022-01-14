@@ -1,24 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Button, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { deleteCategory } from "../../redux/apiActions";
+import { deleteSiteCategory } from "../../redux/apiActions";
 
 class DeleteCategoryModal extends React.Component {
 	submit = () => {
-		const deleteIndex = this.props.categoryIndex;
-		const newData = {
-			...this.props.data,
-			categories: [
-				...this.props.data.categories.slice(0, deleteIndex),
-				...this.props.data.categories.slice(deleteIndex + 1)
-			]
-		}
-		this.props.close();
-		this.props.updateData(newData);
-	}
-	
-	submit = () => {
-		this.props.deleteCategory();
+		this.props.deleteSiteCategory();
 		this.props.close();
 	};
 
@@ -43,7 +30,7 @@ class DeleteCategoryModal extends React.Component {
 };
 
 const mapDispatchToProps = (dispatch, {data, categoryIndex}) => ({
-    deleteCategory: () => dispatch(deleteCategory(data, categoryIndex))
+    deleteSiteCategory: () => dispatch(deleteSiteCategory(data, categoryIndex))
 });
 
 export default connect(null, mapDispatchToProps)(DeleteCategoryModal);

@@ -3,7 +3,7 @@ import { OPEN_MODAL, CLOSE_MODAL } from '../actionTypes';
 const initialState = {
 	type: null,
 	category: -1,
-	site: -1
+	element: -1
 }
 
 const reducer = (state=initialState, action) => {
@@ -12,7 +12,7 @@ const reducer = (state=initialState, action) => {
 			return {
 				type: action.payload.type,
 				category: action.payload.category,
-				site: action.payload.site
+				element: action.payload.element
 			};
 		}
 		case CLOSE_MODAL: {

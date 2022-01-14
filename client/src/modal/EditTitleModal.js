@@ -90,7 +90,7 @@ class EditTitleModal extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-	data: state.data
+	data: state.data.content
 })
 
 const mapDispatchToProps = (dispatch) => ({

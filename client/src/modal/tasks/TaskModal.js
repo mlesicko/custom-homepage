@@ -6,18 +6,17 @@ import {
 	ModalBody,
 	ModalFooter,
 } from "reactstrap";
-import { updateSite } from "../../redux/apiActions";
+import { updateTask, deleteTask } from "../../redux/apiActions";
 import ModalInput from "../ModalInput";
 
-class EditSiteModal extends React.Component {
+class TaskModal extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			name: props.site.name,
-			url: props.site.url,
-			icon: props.site.icon,
+			title: props.task.title,
+			body: props.task.body,
 			category: props.categoryIndex,
-			order: props.siteIndex + 1,
+			order: props.taskIndex + 1,
 		};
 	}
 
@@ -29,17 +28,14 @@ class EditSiteModal extends React.Component {
 		
 
 	valid = () => 
-		this.state.name !== "" &&
-		this.state.url !== "" && 
-		this.state.icon !== "" &&
+		this.state.title !== "" &&
 		this.state.order !== "";
 
 	submit = () => {
-		this.props.updateSite(
+		this.props.updateTask(
 			{
-				name: this.state.name,
-				url: this.state.url,
-				icon: this.state.icon,
+				title: this.state.title,
+				body: this.state.body,
 				
 			},
 			this.state.order - 1,
@@ -48,30 +44,32 @@ class EditSiteModal extends React.Component {
 		this.props.close();
 	}
 
+	deleteAndClose = () => {
+		this.props.deleteTask();
+		this.props.close();
+	}
+			
+
 	getCategories = () =>
-		this.props.data.categories.map((category) => category.name);
+		this.props.data.taskCategories.map((category) => category.name);
 
 	render() {
 		return (
 			<div>
 				<ModalHeader>
-					Editing Site { this.props.site.name }
+					Task
 				</ModalHeader>
 				<ModalBody>
 					<ModalInput
-						placeholder="Name"
-						value={this.state.name}
-						onChange={this.onChange("name")} />
+						placeholder="Title"
+						value={this.state.title}
+						onChange={this.onChange("title")} />
 					<ModalInput
-						type="url"
-						placeholder="URL"
-						value={this.state.url}
-						onChange={this.onChange("url")} />
-					<ModalInput
-						type="url"
-						placeholder="Icon"
-						value={this.state.icon}
-						onChange={this.onChange("icon")} />
+						type="textarea"
+						placeholder="Body"
+						value={this.state.body}
+						onChange={this.onChange("body")}
+						rows={4}/>
 					<ModalInput 
 						type="select"
 						placeholder="Category"
@@ -90,8 +88,9 @@ class EditSiteModal extends React.Component {
 				</ModalBody>
 				<ModalFooter>
 					<Button onClick={this.props.close}>Cancel</Button>
+					<Button onClick={this.deleteAndClose}>Delete</Button>
 					<Button disabled={!this.valid()} onClick={this.submit}>
-						Submit
+						Save
 					</Button>
 				</ModalFooter>
 			</div>
@@ -99,17 +98,18 @@ class EditSiteModal extends React.Component {
 	}
 }
 
-const mapDispatchToProps = (dispatch, {data, categoryIndex, siteIndex}) => ({
-    updateSite: (site, newSiteIndex, newCategoryIndex) => dispatch(
-		updateSite(
+const mapDispatchToProps = (dispatch, {data, categoryIndex, taskIndex}) => ({
+    updateTask: (task, newTaskIndex, newCategoryIndex) => dispatch(
+		updateTask(
 			data, 
 			categoryIndex, 
 			newCategoryIndex,
-			siteIndex, 
-			newSiteIndex,
-			site
+			taskIndex, 
+			newTaskIndex,
+			task
 		)
-	)
+	),
+	deleteTask: () => dispatch(deleteTask(data, categoryIndex, taskIndex))
 });
 
-export default connect(null, mapDispatchToProps)(EditSiteModal);
+export default connect(null, mapDispatchToProps)(TaskModal);

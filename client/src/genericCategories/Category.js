@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faTrash,
@@ -9,19 +8,18 @@ import {
 	faAngleDown
 } from '@fortawesome/free-solid-svg-icons';
 
-import {
-	openEditCategoryModal,
-	openDeleteCategoryModal,
-	openAddSiteModal
-} from "../redux/modalActions";
-import { moveCategory } from "../redux/apiActions";
-import Site from "./Site";
-
 const Category = ({
-	category, categoryIndex, 
-	openEditModal, openDeleteModal, openAddSiteModal,
-	isFirst, isLast,
-	moveCategoryUp, moveCategoryDown,
+	category,
+	categoryIndex, 
+	openEditModal,
+	openDeleteModal,
+	openAddElementModal,
+	isFirst,
+	isLast,
+	moveCategoryUp,
+	moveCategoryDown,
+	elements,
+	CategoryElement
 }) => (
 	<div className="category">
 		<div className="category-title-container">
@@ -32,8 +30,8 @@ const Category = ({
 				alt="Edit Category" title="Edit Category">
 				<FontAwesomeIcon icon={faPencilAlt} />
 			</div>
-			<div className="category-button" onClick={openAddSiteModal}
-				alt="Add Site" title="Add Site">
+			<div className="category-button" onClick={openAddElementModal}
+				alt="Add Element" title="Add Element">
 				<FontAwesomeIcon icon={faPlus} />
 			</div>
 			<div style={{flexGrow: "1"}} />
@@ -64,25 +62,15 @@ const Category = ({
 			</div>
 		</div>
 		<div className="category-title-line" />
-		{ category.sites.map((site, idx) => 
-			<Site
+		{ category.elements.map((element, idx) => 
+			<CategoryElement
 				key={idx}
-				site={site}
+				element={element}
 				categoryIndex={categoryIndex}
-				siteIndex={idx}
+				elementIndex={idx}
 			/>
 		)}
 	</div>
 )
 
-const mapDispatchToProps = (dispatch, {data, categoryIndex}) => ({
-	openEditModal: () => dispatch(openEditCategoryModal(categoryIndex)),	
-	openDeleteModal: () => dispatch(openDeleteCategoryModal(categoryIndex)),
-	openAddSiteModal: () => dispatch(openAddSiteModal(categoryIndex)),
-	moveCategoryUp: () =>
-		dispatch(moveCategory(data, categoryIndex, categoryIndex - 1)),
-	moveCategoryDown: () =>
-		dispatch(moveCategory(data, categoryIndex, categoryIndex + 1))
-});
-
-export default connect(null, mapDispatchToProps)(Category);
+export default Category;

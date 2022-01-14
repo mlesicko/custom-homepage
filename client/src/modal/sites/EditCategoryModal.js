@@ -6,7 +6,7 @@ import {
 	ModalBody,
 	ModalFooter,
 } from "reactstrap";
-import { updateCategory } from "../../redux/apiActions";
+import { updateSiteCategory } from "../../redux/apiActions";
 import ModalInput from "../ModalInput";
 
 class EditCategoryModal extends React.Component {
@@ -22,7 +22,7 @@ class EditCategoryModal extends React.Component {
 	valid = () => this.state.name !== "";
 
 	submit = () => {
-		this.props.updateCategory(
+		this.props.updateSiteCategory(
 			{
 				...this.props.category,
 				name: this.state.name
@@ -57,8 +57,8 @@ class EditCategoryModal extends React.Component {
 };
 
 const mapDispatchToProps = (dispatch, {data, categoryIndex}) => ({
-    updateCategory: (category) => 
-		dispatch(updateCategory(data, categoryIndex, category))
+    updateSiteCategory: (category) => 
+		dispatch(updateSiteCategory(data, categoryIndex, category))
 });
 
 export default connect(null, mapDispatchToProps)(EditCategoryModal);

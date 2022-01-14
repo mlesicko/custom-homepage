@@ -3,9 +3,14 @@ import {
 	ADD_SITE,
 	EDIT_SITE,
 	DELETE_SITE,
-	ADD_CATEGORY,
-	EDIT_CATEGORY,
-	DELETE_CATEGORY,
+	ADD_SITE_CATEGORY,
+	EDIT_SITE_CATEGORY,
+	DELETE_SITE_CATEGORY,
+	ADD_TASK,
+	TASK,
+	ADD_TASK_CATEGORY,
+	EDIT_TASK_CATEGORY,
+	DELETE_TASK_CATEGORY,
 	EDIT_TITLE
 } from '../modal/modalTypes';
 
@@ -14,7 +19,7 @@ export const openAddSiteModal = (category) => ({
 	payload: {
 		type: ADD_SITE,
 		category: category,
-		site: -1,
+		element: -1,
 	}
 })
 
@@ -23,7 +28,7 @@ export const openEditSiteModal = (category, site) => ({
 	payload: {
 		type: EDIT_SITE,
 		category: category,
-		site: site,
+		element: site,
 	}
 })
 
@@ -32,34 +37,79 @@ export const openDeleteSiteModal = (category, site) => ({
 	payload: {
 		type: DELETE_SITE,
 		category: category,
-		site: site,
+		element: site,
 	}
 })
 
-export const openAddCategoryModal = () => ({
+export const openAddSiteCategoryModal = () => ({
 	type: OPEN_MODAL,
 	payload: {
-		type: ADD_CATEGORY,
+		type: ADD_SITE_CATEGORY,
 		category: -1,
-		site: -1,
+		element: -1,
 	}
 })
 
-export const openEditCategoryModal = (category) => ({
+export const openEditSiteCategoryModal = (category) => ({
 	type: OPEN_MODAL,
 	payload: {
-		type: EDIT_CATEGORY,
+		type: EDIT_SITE_CATEGORY,
 		category: category,
-		site: -1,
+		element: -1,
 	}
 })
 
-export const openDeleteCategoryModal = (category) => ({
+export const openDeleteSiteCategoryModal = (category) => ({
 	type: OPEN_MODAL,
 	payload: {
-		type: DELETE_CATEGORY,
+		type: DELETE_SITE_CATEGORY,
 		category: category,
-		site: -1,
+		element: -1,
+	}
+})
+
+export const openAddTaskModal = (category) => ({
+	type: OPEN_MODAL,
+	payload: {
+		type: ADD_TASK,
+		category: category,
+		element: -1,
+	}
+})
+
+export const openTaskModal = (category, task) => ({
+	type: OPEN_MODAL,
+	payload: {
+		type: TASK,
+		category: category,
+		element: task,
+	}
+})
+
+export const openAddTaskCategoryModal = () => ({
+	type: OPEN_MODAL,
+	payload: {
+		type: ADD_TASK_CATEGORY,
+		category: -1,
+		element: -1,
+	}
+})
+
+export const openEditTaskCategoryModal = (category) => ({
+	type: OPEN_MODAL,
+	payload: {
+		type: EDIT_TASK_CATEGORY,
+		category: category,
+		element: -1,
+	}
+})
+
+export const openDeleteTaskCategoryModal = (category) => ({
+	type: OPEN_MODAL,
+	payload: {
+		type: DELETE_TASK_CATEGORY,
+		category: category,
+		element: -1,
 	}
 })
 
