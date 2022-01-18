@@ -8,9 +8,9 @@ import "./task.css";
 class Task extends React.Component {
 	render() {
 		return (
-			<div className="task" onClick={this.props.openTaskModal}>
+			<a className="task" onClick={this.props.openTaskModal}>
 				{this.props.element.title}
-			</div>
+			</a>
 		);
 	}
 }
