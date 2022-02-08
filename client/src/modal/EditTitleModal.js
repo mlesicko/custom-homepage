@@ -1,101 +1,89 @@
-import React from "react";
-import { connect } from "react-redux";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, ModalBody, ModalFooter } from "reactstrap";
 import { updateTitle } from "../redux/apiActions";
 import ModalInput from "./ModalInput";
 
-class EditTitleModal extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			part_1: props.data.title.part_1,
-			part_2: props.data.title.part_2,
-			bg_color: props.data.title.bg_color,
-			text_color: props.data.title.text_color,
-			page_title: props.data.title.page_title
-		};
-	}
+const EditTitleModal = ({ close }) => {
+	const dispatch = useDispatch();
 
-	onChange = (key) => (e) => this.setState({[key]: e.target.value});
+	const data = useSelector((state) => state.data.content);
+
+	const [part_1, setPartOne] = useState(data.title.part_1);
+	const [part_2, setPartTwo] = useState(data.title.part_2);
+	const [bg_color, setBgColor] = useState(data.title.bg_color);
+	const [text_color, setTextColor] = useState(data.title.text_color);
+	const [page_title, setPageTitle] = useState(data.title.page_title);
 	
-	valid = () => 
-		this.part_1 !== "" &&
-		this.part_2 !== "" &&
-		this.bg_color !== "" &&
-		this.text_color !== "" &&
-		this.page_title !== "";
+	const valid =
+		part_1 !== "" &&
+		part_2 !== "" &&
+		bg_color !== "" &&
+		text_color !== "" &&
+		page_title !== "";
 
-	submit = () => {
-		this.props.updateTitle(
-			this.props.data,
+	const submit = () => {
+		dispatch(updateTitle(
+			data,
 			{
-				part_1: this.state.part_1,
-				part_2: this.state.part_2,
-				bg_color: this.state.bg_color,
-				text_color: this.state.text_color,
-				page_title: this.state.page_title
+				part_1,
+				part_2,
+				bg_color,
+				text_color,
+				page_title
 			}
-		);
-		this.props.close();
+		));
+		close();
 	}
 
-	render() {
-		const span_style = {
-			color: this.state.text_color,
-			backgroundColor: this.state.bg_color
-		};
-		return (
+	const span_style = {
+		color: text_color,
+		backgroundColor: bg_color
+	};
+
+	return (
+		<div>
 			<div>
-				<div>
-					<div className="page-title">
-						{this.state.part_1}
-						<span className="page-title-colored-part" style={span_style}>
-							{this.state.part_2}
-						</span>
-					</div>
+				<div className="page-title">
+					{part_1}
+					<span className="page-title-colored-part" style={span_style}>
+						{part_2}
+					</span>
 				</div>
-				<ModalBody>
-					<ModalInput
-						placeholder="Part 1"
-						value={this.state.part_1}
-						onChange={this.onChange("part_1")} />
-					<ModalInput
-						placeholder="Part 2"
-						value={this.state.part_2}
-						onChange={this.onChange("part_2")} />
-					<ModalInput
-						type="color"
-						placeholder="Background Color"
-						value={this.state.bg_color}
-						onChange={this.onChange("bg_color")} />
-					<ModalInput
-						type="color"
-						placeholder="Text Color"
-						value={this.state.text_color}
-						onChange={this.onChange("text_color")} />
-					<ModalInput
-						placeholder="Page Title"
-						value={this.state.page_title}
-						onChange={this.onChange("page_title")} />
-				</ModalBody>
-				<ModalFooter>
-					<Button onClick={this.props.close}>Cancel</Button>
-					<Button disabled={!this.valid()} onClick={this.submit}>
-						Submit
-					</Button>
-				</ModalFooter>
 			</div>
-		);
-	}
+			<ModalBody>
+				<ModalInput
+					placeholder="Part 1"
+					value={part_1}
+					onChange={(e) => setPartOne(e.target.value)} />
+				<ModalInput
+					placeholder="Part 2"
+					value={part_2}
+					onChange={(e) => setPartTwo(e.target.value)} />
+				<ModalInput
+					type="color"
+					placeholder="Background Color"
+					value={bg_color}
+					onChange={(e) => setBgColor(e.target.value)} />
+				<ModalInput
+					type="color"
+					placeholder="Text Color"
+					value={text_color}
+					onChange={(e) => setTextColor(e.target.value)} />
+				<ModalInput
+					placeholder="Page Title"
+					value={page_title}
+					onChange={(e) => setPageTitle(e.target.value)} />
+			</ModalBody>
+			<ModalFooter>
+				<Button onClick={close}>Cancel</Button>
+				<Button disabled={!valid} onClick={submit}>
+					Submit
+				</Button>
+			</ModalFooter>
+		</div>
+	);
 }
 
-const mapStateToProps = (state) => ({
-	data: state.data.content
-})
-
-const mapDispatchToProps = (dispatch) => ({
-	updateTitle: (data, title) => dispatch(updateTitle(data, title))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditTitleModal);
+export default EditTitleModal;
 

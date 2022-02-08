@@ -1,5 +1,5 @@
-import React from "react";
-import { connect } from "react-redux";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
 	Button,
 	ModalHeader,
@@ -9,56 +9,41 @@ import {
 import { updateTaskCategory } from "../../redux/apiActions";
 import ModalInput from "../ModalInput";
 
-class EditCategoryModal extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			name: props.category.name
-		};
-	}
+const EditCategoryModal = ({close}) => {
+	const dispatch = useDispatch();
 
-	onChange = (e) => this.setState({name: e.target.value});
+	const data = useSelector((state) => state.data.content);
+	const categoryIndex = useSelector((state) => state.modalState.category);
+	const category = data.taskCategories[categoryIndex];
 
-	valid = () => this.state.name !== "";
+	const [name, setName] = useState(category.name);
 
-	submit = () => {
-		this.props.updateTaskCategory(
-			{
-				...this.props.category,
-				name: this.state.name
-			}
-		);
-		this.props.close();
+	const valid = name !== "";
+
+	const submit = () => {
+		dispatch(updateTaskCategory(data, categoryIndex, {...category, name}));
+		close();
 	};
 
-	render() {
-		return (
-			<div>
-				<ModalHeader>
-					Editing Category {
-						this.props.category.name
-					}
-				</ModalHeader>
-				<ModalBody>
-					<ModalInput
-						placeholder="Name"
-						value={this.state.name}
-						onChange={this.onChange} />
-				</ModalBody>
-				<ModalFooter>
-					<Button onClick={this.props.close}>Cancel</Button>
-					<Button disabled={!this.valid()} onClick={this.submit}>
-						Submit
-					</Button>
-				</ModalFooter>
-			</div>
-		)
-	}
+	return (
+		<div>
+			<ModalHeader>
+				Editing Category {category.name}
+			</ModalHeader>
+			<ModalBody>
+				<ModalInput
+					placeholder="Name"
+					value={name}
+					onChange={(e) => setName(e.target.value)} />
+			</ModalBody>
+			<ModalFooter>
+				<Button onClick={close}>Cancel</Button>
+				<Button disabled={!valid} onClick={submit}>
+					Submit
+				</Button>
+			</ModalFooter>
+		</div>
+	);
 };
 
-const mapDispatchToProps = (dispatch, {data, categoryIndex}) => ({
-    updateTaskCategory: (category) => 
-		dispatch(updateTaskCategory(data, categoryIndex, category))
-});
-
-export default connect(null, mapDispatchToProps)(EditCategoryModal);
+export default EditCategoryModal;

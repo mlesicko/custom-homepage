@@ -1,65 +1,51 @@
-import React from "react";
-import { connect } from "react-redux";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Button, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { addTask } from "../../redux/apiActions";
 import ModalInput from "../ModalInput";
 
-class AddTaskModal extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			title: "",
-			body: ""
-		};
-	}
-
-	onChange = (key) => (e) => this.setState({[key]: e.target.value});
+const AddTaskModal = ({close}) => {
+	const dispatch = useDispatch();
 	
-	valid = () => this.state.title !== "";
+	const data = useSelector((state) => state.data.content);
+	const categoryIndex = useSelector((state) => state.modalState.category);
 
-	submit = () => {
-		this.props.addTask(
-			{
-				title: this.state.title,
-				body: this.state.body
-			}
-		);
-		this.props.close();
+	const [title, setTitle] = useState("");
+	const [body, setBody] = useState("");
+
+	const valid = title !== "";
+
+	const submit = () => {
+		dispatch(addTask(data, categoryIndex, { title, body }));
+		close();
 	}
 
-	render() {
-		return (
-			<div>
-				<ModalHeader>
-					New Task
-				</ModalHeader>
-				<ModalBody>
-					<ModalInput
-						placeholder="Title"
-						value={this.state.title}
-						onChange={this.onChange("title")} />
-					<ModalInput
-						type="textarea"
-						placeholder="Body"
-						value={this.state.body}
-						onChange={this.onChange("body")}
-						rows={4} />
-				</ModalBody>
-				<ModalFooter>
-					<Button onClick={this.props.close}>Cancel</Button>
-					<Button disabled={!this.valid()} onClick={this.submit}>
-						Submit
-					</Button>
-				</ModalFooter>
-			</div>
-		);
-	}
+	return (
+		<div>
+			<ModalHeader>
+				New Task
+			</ModalHeader>
+			<ModalBody>
+				<ModalInput
+					placeholder="Title"
+					value={title}
+					onChange={(e) => setTitle(e.target.value)} />
+				<ModalInput
+					type="textarea"
+					placeholder="Body"
+					value={body}
+					onChange={(e) => setBody(e.target.value)}
+					rows={4} />
+			</ModalBody>
+			<ModalFooter>
+				<Button onClick={close}>Cancel</Button>
+				<Button disabled={!valid} onClick={submit}>
+					Submit
+				</Button>
+			</ModalFooter>
+		</div>
+	);
 }
 
-const mapDispatchToProps = (dispatch, {data, categoryIndex}) => ({
-    addTask: (task) => 
-		dispatch(addTask(data, categoryIndex, task))
-});
-
-export default connect(null, mapDispatchToProps)(AddTaskModal);
+export default AddTaskModal;
 

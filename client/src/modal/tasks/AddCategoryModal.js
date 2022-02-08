@@ -1,61 +1,47 @@
-import React from "react";
-import { connect } from "react-redux";
-import { 
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
 	Button,
-	ModalHeader, 
+	ModalHeader,
 	ModalBody,
 	ModalFooter,
 } from "reactstrap";
 import { addTaskCategory } from "../../redux/apiActions";
 import ModalInput from "../ModalInput";
 
-class AddCategoryModal extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			name: ""
-		};
-	}
+const AddCategoryModal = ({close}) => {
+	const dispatch = useDispatch();
 
-	onChange = (e) => this.setState({name: e.target.value});
-	
-	valid = () => this.state.name !== "";
-	
-	submit = () => {
-		this.props.addTaskCategory(
-			{
-				elements: [],
-				name: this.state.name
-			}
-		);
-		this.props.close();
+	const data = useSelector((state) => state.data.content);
+
+	const [name, setName] = useState("");
+
+	const valid = name !== "";
+
+	const submit = () => {
+		dispatch(addTaskCategory(data, { elements: [], name }));
+		close();
 	};
 
-	render() {
-		return (
-			<div>
-				<ModalHeader>
-					New Category
-				</ModalHeader>
-				<ModalBody>
-					<ModalInput
-						placeholder="Name"
-						value={this.state.name}
-						onChange={this.onChange} />
-				</ModalBody>
-				<ModalFooter>
-					<Button onClick={this.props.close}>Cancel</Button>
-					<Button disabled={!this.valid()} onClick={this.submit}>
-						Submit
-					</Button>
-				</ModalFooter>
-			</div>
-		);
-	}
-}
+	return (
+		<div>
+			<ModalHeader>
+				New Category
+			</ModalHeader>
+			<ModalBody>
+				<ModalInput
+					placeholder="Name"
+					value={name}
+					onChange={(e) => setName(e.target.value)} />
+			</ModalBody>
+			<ModalFooter>
+				<Button onClick={close}>Cancel</Button>
+				<Button disabled={!valid} onClick={submit}>
+					Submit
+				</Button>
+			</ModalFooter>
+		</div>
+	);
+};
 
-const mapDispatchToProps = (dispatch, {data}) => ({
-	addTaskCategory: (category) => dispatch(addTaskCategory(data, category))
-});
-
-export default connect(null, mapDispatchToProps)(AddCategoryModal);
+export default AddCategoryModal;

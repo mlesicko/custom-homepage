@@ -1,5 +1,5 @@
-import React from "react";
-import { connect } from "react-redux";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
 	Button,
 	ModalHeader,
@@ -9,107 +9,88 @@ import {
 import { updateTask, deleteTask } from "../../redux/apiActions";
 import ModalInput from "../ModalInput";
 
-class TaskModal extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			title: props.task.title,
-			body: props.task.body,
-			category: props.categoryIndex,
-			order: props.taskIndex + 1,
-		};
-	}
+const TaskModal = ({close}) => {
+	const dispatch = useDispatch();
 
-	onChange = (key) => (e) => this.setState({[key]: e.target.value});
+	const data = useSelector((state) => state.data.content);
+	const previousCategoryIndex = useSelector((state) => state.modalState.category);
+	const previousTaskIndex = useSelector((state) => state.modalState.element);
 
-	onCategoryChange = (e) => this.setState(
-		{ category: this.getCategories().indexOf(e.target.value) }
+	const task =
+		data.taskCategories[previousCategoryIndex]?.elements?.[previousTaskIndex];
+
+	const [title, setTitle] = useState(task.title);
+	const [body, setBody] = useState(task.body);
+	const [category, setCategory] = useState(previousCategoryIndex);
+	const [order, setOrder] = useState(previousTaskIndex + 1);
+
+	const getCategories = () => data.taskCategories.map((category) => category.name);
+	const onCategoryChange = (e) => setCategory(
+		getCategories().indexOf(e.target.value)
 	);
 		
+	const valid = title !== "" && order !== "";
 
-	valid = () => 
-		this.state.title !== "" &&
-		this.state.order !== "";
-
-	submit = () => {
-		this.props.updateTask(
-			{
-				title: this.state.title,
-				body: this.state.body,
-				
-			},
-			this.state.order - 1,
-			this.state.category
+	const submit = () => {
+		dispatch(
+			updateTask(
+				data, 
+				previousCategoryIndex, 
+				category,
+				previousTaskIndex, 
+				order - 1,
+				{ title, body }
+			)
 		);
-		this.props.close();
+		close();
 	}
 
-	deleteAndClose = () => {
-		this.props.deleteTask();
-		this.props.close();
+	const deleteAndClose = () => {
+		dispatch(deleteTask(data, previousCategoryIndex, previousTaskIndex));
+		close();
 	}
 			
-
-	getCategories = () =>
-		this.props.data.taskCategories.map((category) => category.name);
-
-	render() {
-		return (
-			<div>
-				<ModalHeader>
-					Task
-				</ModalHeader>
-				<ModalBody>
-					<ModalInput
-						placeholder="Title"
-						value={this.state.title}
-						onChange={this.onChange("title")} />
-					<ModalInput
-						type="textarea"
-						placeholder="Body"
-						value={this.state.body}
-						onChange={this.onChange("body")}
-						rows={4}/>
-					<ModalInput 
-						type="select"
-						placeholder="Category"
-						value={this.getCategories()[this.state.category]}
-						onChange={this.onCategoryChange}
-					>
-						{ this.getCategories().map((category)=>
-							<option key={category}>{category}</option>)
-						}
-					</ModalInput>
-					<ModalInput
-						type="number"
-						placeholder="Order"
-						value={this.state.order}
-						onChange={this.onChange("order")} />
-				</ModalBody>
-				<ModalFooter>
-					<Button onClick={this.props.close}>Cancel</Button>
-					<Button onClick={this.deleteAndClose}>Delete</Button>
-					<Button disabled={!this.valid()} onClick={this.submit}>
-						Save
-					</Button>
-				</ModalFooter>
-			</div>
-		);
-	}
+	return (
+		<div>
+			<ModalHeader>
+				Task
+			</ModalHeader>
+			<ModalBody>
+				<ModalInput
+					placeholder="Title"
+					value={title}
+					onChange={(e) => setTitle(e.target.value)} />
+				<ModalInput
+					type="textarea"
+					placeholder="Body"
+					value={body}
+					onChange={(e) => setBody(e.target.value)}
+					rows={4}/>
+				<ModalInput 
+					type="select"
+					placeholder="Category"
+					value={getCategories()[category]}
+					onChange={onCategoryChange}
+				>
+					{ getCategories().map((category)=>
+						<option key={category}>{category}</option>)
+					}
+				</ModalInput>
+				<ModalInput
+					type="number"
+					placeholder="Order"
+					value={order}
+					onChange={(e) => setOrder(e.target.value)} />
+			</ModalBody>
+			<ModalFooter>
+				<Button onClick={close}>Cancel</Button>
+				<Button onClick={deleteAndClose}>Delete</Button>
+				<Button disabled={!valid} onClick={submit}>
+					Save
+				</Button>
+			</ModalFooter>
+		</div>
+	);
 }
 
-const mapDispatchToProps = (dispatch, {data, categoryIndex, taskIndex}) => ({
-    updateTask: (task, newTaskIndex, newCategoryIndex) => dispatch(
-		updateTask(
-			data, 
-			categoryIndex, 
-			newCategoryIndex,
-			taskIndex, 
-			newTaskIndex,
-			task
-		)
-	),
-	deleteTask: () => dispatch(deleteTask(data, categoryIndex, taskIndex))
-});
-
-export default connect(null, mapDispatchToProps)(TaskModal);
+export default TaskModal;

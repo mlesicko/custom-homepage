@@ -1,17 +1,25 @@
-import React from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { openEditTitleModal } from "./redux/modalActions";
 
-const PageTitle = ({title, openEditTitleModal}) => {
-	document.title = title?.page_title ?? "Custom Homepage";
+const PageTitle = () => {
+	const dispatch = useDispatch();
+	const title = useSelector((state) => state.data?.content?.title);
+
+	useEffect(() =>
+		document.title = title?.page_title ?? "Custom Homepage",
+		[title]
+	);
+
 	const span_style = {
 		color: title?.text_color,
 		backgroundColor: title?.bg_color
 	};
+
 	return (
 		<div className="page-title">
 			<Link to="/" style={{textDecoration: "none", color: "unset"}}>
@@ -20,7 +28,8 @@ const PageTitle = ({title, openEditTitleModal}) => {
 					{title?.part_2}
 				</span>
 			</Link>
-			<div className="edit-title-button" onClick={openEditTitleModal}
+			<div className="edit-title-button"
+				onClick={() => dispatch(openEditTitleModal())}
 				alt="Edit Page Title" title="Edit Page Title">
 				<FontAwesomeIcon icon={faPencilAlt} />
 			</div>
@@ -28,12 +37,4 @@ const PageTitle = ({title, openEditTitleModal}) => {
 	);
 };
 
-const mapStateToProps = (state) => ({
-	title: state.data?.content?.title
-});
-
-const mapDispatchToProps = (dispatch) => ({
-	openEditTitleModal: () => dispatch(openEditTitleModal())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PageTitle);
+export default PageTitle;

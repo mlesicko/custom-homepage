@@ -1,5 +1,5 @@
-import React from "react";
-import { connect } from "react-redux";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { 
 	Button,
 	ModalHeader, 
@@ -9,53 +9,34 @@ import {
 import { addSiteCategory } from "../../redux/apiActions";
 import ModalInput from "../ModalInput";
 
-class AddCategoryModal extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			name: ""
-		};
-	}
-
-	onChange = (e) => this.setState({name: e.target.value});
-	
-	valid = () => this.state.name !== "";
-	
-	submit = () => {
-		this.props.addSiteCategory(
-			{
-				elements: [],
-				name: this.state.name
-			}
-		);
-		this.props.close();
+const AddCategoryModal = ({close}) => {
+	const dispatch = useDispatch();
+	const data = useSelector((state) => state.data.content);
+	const [name, setName] = useState("");
+	const valid = name !== "";
+	const submit = () => { 
+		dispatch(addSiteCategory(data, { elements: [], name }));
+		close();
 	};
-
-	render() {
-		return (
-			<div>
-				<ModalHeader>
-					New Category
-				</ModalHeader>
-				<ModalBody>
-					<ModalInput
-						placeholder="Name"
-						value={this.state.name}
-						onChange={this.onChange} />
-				</ModalBody>
-				<ModalFooter>
-					<Button onClick={this.props.close}>Cancel</Button>
-					<Button disabled={!this.valid()} onClick={this.submit}>
-						Submit
-					</Button>
-				</ModalFooter>
-			</div>
-		);
-	}
+	return (
+		<div>
+			<ModalHeader>
+				New Category
+			</ModalHeader>
+			<ModalBody>
+				<ModalInput
+					placeholder="Name"
+					value={name}
+					onChange={(e) => setName(e.target.value)} />
+			</ModalBody>
+			<ModalFooter>
+				<Button onClick={close}>Cancel</Button>
+				<Button disabled={!valid} onClick={submit}>
+					Submit
+				</Button>
+			</ModalFooter>
+		</div>
+	);
 }
 
-const mapDispatchToProps = (dispatch, {data}) => ({
-	addSiteCategory: (category) => dispatch(addSiteCategory(data, category))
-});
-
-export default connect(null, mapDispatchToProps)(AddCategoryModal);
+export default AddCategoryModal;

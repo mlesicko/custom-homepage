@@ -1,5 +1,5 @@
-import React from "react";
-import { connect } from "react-redux";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
 	Button,
 	ModalHeader,
@@ -9,107 +9,92 @@ import {
 import { updateSite } from "../../redux/apiActions";
 import ModalInput from "../ModalInput";
 
-class EditSiteModal extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			name: props.site.name,
-			url: props.site.url,
-			icon: props.site.icon,
-			category: props.categoryIndex,
-			order: props.siteIndex + 1,
-		};
-	}
+const EditSiteModal = ({close}) => {
+	const dispatch = useDispatch();
+	
+	const data = useSelector((state) => state.data.content);
+	const previousCategoryIndex = useSelector((state) => state.modalState.category);
+	const previousSiteIndex = useSelector((state) => state.modalState.element);
+	const site =
+		data.siteCategories[previousCategoryIndex]?.elements?.[previousSiteIndex];
 
-	onChange = (key) => (e) => this.setState({[key]: e.target.value});
+	const [name, setName] = useState(site.name);
+	const [url, setUrl] = useState(site.url);
+	const [icon, setIcon] = useState(site.icon);
+	const [category, setCategory] = useState(previousCategoryIndex);
+	const [order, setOrder] = useState(previousSiteIndex + 1);
 
-	onCategoryChange = (e) => this.setState(
-		{ category: this.getCategories().indexOf(e.target.value) }
-	);
+	const getCategories = () =>
+		data.siteCategories.map((category) => category.name);
+	const onCategoryChange = (e) =>
+		setCategory(getCategories().indexOf(e.target.value));
 		
 
-	valid = () => 
-		this.state.name !== "" &&
-		this.state.url !== "" && 
-		this.state.icon !== "" &&
-		this.state.order !== "";
+	const valid = 
+		name !== "" &&
+		url !== "" && 
+		icon !== "" &&
+		order !== "";
 
-	submit = () => {
-		this.props.updateSite(
-			{
-				name: this.state.name,
-				url: this.state.url,
-				icon: this.state.icon,
-				
-			},
-			this.state.order - 1,
-			this.state.category
+	const submit = () => {
+		dispatch(
+			updateSite(
+				data,
+				previousCategoryIndex,
+				category,
+				previousSiteIndex,
+				order - 1,
+				{ name, url, icon }
+			)
 		);
-		this.props.close();
-	}
+		close();
+	};
 
-	getCategories = () =>
-		this.props.data.siteCategories.map((category) => category.name);
 
-	render() {
-		return (
-			<div>
-				<ModalHeader>
-					Editing Site { this.props.site.name }
-				</ModalHeader>
-				<ModalBody>
-					<ModalInput
-						placeholder="Name"
-						value={this.state.name}
-						onChange={this.onChange("name")} />
-					<ModalInput
-						type="url"
-						placeholder="URL"
-						value={this.state.url}
-						onChange={this.onChange("url")} />
-					<ModalInput
-						type="url"
-						placeholder="Icon"
-						value={this.state.icon}
-						onChange={this.onChange("icon")} />
-					<ModalInput 
-						type="select"
-						placeholder="Category"
-						value={this.getCategories()[this.state.category]}
-						onChange={this.onCategoryChange}
-					>
-						{ this.getCategories().map((category)=>
-							<option key={category}>{category}</option>)
-						}
-					</ModalInput>
-					<ModalInput
-						type="number"
-						placeholder="Order"
-						value={this.state.order}
-						onChange={this.onChange("order")} />
-				</ModalBody>
-				<ModalFooter>
-					<Button onClick={this.props.close}>Cancel</Button>
-					<Button disabled={!this.valid()} onClick={this.submit}>
-						Submit
-					</Button>
-				</ModalFooter>
-			</div>
-		);
-	}
+	return (
+		<div>
+			<ModalHeader>
+				Editing Site { site.name }
+			</ModalHeader>
+			<ModalBody>
+				<ModalInput
+					placeholder="Name"
+					value={name}
+					onChange={(e) => setName(e.target.value)} />
+				<ModalInput
+					type="url"
+					placeholder="URL"
+					value={url}
+					onChange={(e) => setUrl(e.target.value)} />
+				<ModalInput
+					type="url"
+					placeholder="Icon"
+					value={icon}
+					onChange={(e) => setIcon(e.target.value)} />
+				<ModalInput 
+					type="select"
+					placeholder="Category"
+					value={getCategories()[category]}
+					onChange={onCategoryChange}
+				>
+					{ getCategories().map((category)=>
+						<option key={category}>{category}</option>)
+					}
+				</ModalInput>
+				<ModalInput
+					type="number"
+					placeholder="Order"
+					value={order}
+					onChange={(e) => setOrder(e.target.value)} />
+			</ModalBody>
+			<ModalFooter>
+				<Button onClick={close}>Cancel</Button>
+				<Button disabled={!valid} onClick={submit}>
+					Submit
+				</Button>
+			</ModalFooter>
+		</div>
+	);
 }
 
-const mapDispatchToProps = (dispatch, {data, categoryIndex, siteIndex}) => ({
-    updateSite: (site, newSiteIndex, newCategoryIndex) => dispatch(
-		updateSite(
-			data, 
-			categoryIndex, 
-			newCategoryIndex,
-			siteIndex, 
-			newSiteIndex,
-			site
-		)
-	)
-});
-
-export default connect(null, mapDispatchToProps)(EditSiteModal);
+export default EditSiteModal;

@@ -1,4 +1,3 @@
-import React from "react";
 import { Input, Label, Collapse } from "reactstrap";
 
 const ModalInput = ({

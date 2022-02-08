@@ -1,72 +1,55 @@
-import React from "react";
-import { connect } from "react-redux";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Button, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { addSite } from "../../redux/apiActions";
 import ModalInput from "../ModalInput";
 
-class AddSiteModal extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			name: "",
-			url: "",
-			icon: ""
-		};
-	}
+const AddSiteModal = ({close}) => {
+	const dispatch = useDispatch();
 
-	onChange = (key) => (e) => this.setState({[key]: e.target.value});
+	const data = useSelector((state) => state.data.content);
+	const categoryIndex = useSelector((state) => state.modalState.category);
+	const [name, setName] = useState("");
+	const [url, setUrl] = useState("");
+	const [icon, setIcon] = useState("");
 	
-	valid = () => 
-		this.state.name !== "" && this.state.url !== "" && this.state.icon !== "";
+	const valid = name !== "" && url !== "" && icon !== "";
 
-	submit = () => {
-		this.props.addSite(
-			{
-				name: this.state.name,
-				url: this.state.url,
-				icon: this.state.icon
-			}
-		);
-		this.props.close();
+	const submit = () => {
+		dispatch(addSite(data, categoryIndex, {name, url, icon}))
+		close();
 	}
 
-	render() {
-		return (
-			<div>
-				<ModalHeader>
-					New Site
-				</ModalHeader>
-				<ModalBody>
-					<ModalInput
-						placeholder="Name"
-						value={this.state.name}
-						onChange={this.onChange("name")} />
-					<ModalInput
-						type="url"
-						placeholder="URL"
-						value={this.state.url}
-						onChange={this.onChange("url")} />
-					<ModalInput
-						type="url"
-						placeholder="Icon"
-						value={this.state.icon}
-						onChange={this.onChange("icon")} />
-				</ModalBody>
-				<ModalFooter>
-					<Button onClick={this.props.close}>Cancel</Button>
-					<Button disabled={!this.valid()} onClick={this.submit}>
-						Submit
-					</Button>
-				</ModalFooter>
-			</div>
-		);
-	}
+	return (
+		<div>
+			<ModalHeader>
+				New Site
+			</ModalHeader>
+			<ModalBody>
+				<ModalInput
+					placeholder="Name"
+					value={name}
+					onChange={(e) => setName(e.target.value)} />
+				<ModalInput
+					type="url"
+					placeholder="URL"
+					value={url}
+					onChange={(e) => setUrl(e.target.value)} />
+				<ModalInput
+					type="url"
+					placeholder="Icon"
+					value={icon}
+					onChange={(e) => setIcon(e.target.value)} />
+			</ModalBody>
+			<ModalFooter>
+				<Button onClick={close}>Cancel</Button>
+				<Button disabled={!valid} onClick={submit}>
+					Submit
+				</Button>
+			</ModalFooter>
+		</div>
+	);
 }
 
-const mapDispatchToProps = (dispatch, {data, categoryIndex}) => ({
-    addSite: (site) => 
-		dispatch(addSite(data, categoryIndex, site))
-});
-
-export default connect(null, mapDispatchToProps)(AddSiteModal);
+export default AddSiteModal;
 

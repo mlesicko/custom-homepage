@@ -1,5 +1,5 @@
-import React from "react";
-import { connect } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import CustomHomepageRoutes from "./CustomHomepageRoutes";
 import ModalWrapper from "./modal/ModalWrapper";
@@ -8,17 +8,20 @@ import { getData } from "./redux/apiActions";
 
 import './App.css';
 
-class App extends React.Component {
-	componentDidMount() {
-		this.props.getData();
-	}
+const App = () => {
+	const dispatch = useDispatch();
+	useEffect(() => dispatch(getData()), [dispatch]);
 
-	innerContent = () => {
-		if (this.props.loading || this.props.content === null) {
+	const loading = useSelector((state) => state.data.loading);
+	const content = useSelector((state) => state.data.content);
+	const error = useSelector((state) => state.data.error);
+
+	const innerContent = (() => {
+		if (loading || content === null) {
 			return (
 				<div className="loading-msg">Loading...</div>
 			);
-		} else if (this.props.error) {
+		} else if (error) {
 			return (
 				<>
 					<div className="error-msg-1">
@@ -34,26 +37,14 @@ class App extends React.Component {
 				<CustomHomepageRoutes />
 			);
 		}
-	}
+	})();
 
-	render() {
-		return (
-			<ModalWrapper>
-				{this.innerContent()}
-			</ModalWrapper>
-		);
-	}
+	return (
+		<ModalWrapper>
+			{innerContent}
+		</ModalWrapper>
+	);
 
 }
 
-const mapDispatchToProps = (dispatch) => ({
-	getData: () => dispatch(getData())
-});
-
-const mapStateToProps = (state) => ({
-	loading: state.data.loading,
-	error: state.data.error,
-	content: state.data.content,
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

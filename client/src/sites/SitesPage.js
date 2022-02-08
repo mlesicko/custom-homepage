@@ -1,29 +1,21 @@
-import React from "react";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import CategoryList from "../genericCategories/CategoryList";
 import { openAddSiteCategoryModal } from "../redux/modalActions";
 import SiteCategory from "./SiteCategory";
 
-class SitesPage extends React.Component {
-	render() {
-		return (
-			<CategoryList
-				categories={this.props.data.siteCategories}
-				CategoryType={SiteCategory}
-				onAddCategory={this.props.openAddCategoryModal}
-				data={this.props.data}
-			/>
-		);
-	}
-}
+const SitesPage = () => {
+	const dispatch = useDispatch();
+	const data = useSelector((state) => state.data.content);	
 
-const mapStateToProps = (state) => ({
-	data: state.data.content
-});
+	return (
+		<CategoryList
+			categories={data.siteCategories}
+			CategoryType={SiteCategory}
+			onAddCategory={() => dispatch(openAddSiteCategoryModal())}
+			data={data}
+		/>
+	);
+};
 
-const mapDispatchToProps = (dispatch) => ({
-	openAddCategoryModal: () => dispatch(openAddSiteCategoryModal())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SitesPage);
+export default SitesPage;

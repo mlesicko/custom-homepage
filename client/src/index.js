@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 
 import { Provider } from 'react-redux';
@@ -10,11 +10,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-	<React.Fragment>
+	<Fragment>
 		<Provider store={store}>
 			<App />
 		</Provider>
-	</React.Fragment>,
+	</Fragment>,
 	document.getElementById('root')
 );
 

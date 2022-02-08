@@ -8,4 +8,9 @@
 	color: white;
 	cursor: pointer;
 	text-decoration: none;
+	border: none;
+}
+
+.task:hover {
+	background-color: #555;
 }

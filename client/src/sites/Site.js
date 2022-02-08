@@ -1,7 +1,6 @@
-import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { openEditSiteModal, openDeleteSiteModal } from "../redux/modalActions";
 
@@ -11,71 +10,61 @@ const PLAYLISTS_SUFFIX = "/playlists?view=1&sort=lad&flow=grid";
 const YOUTUBE_CHANNEL_PATTERN =
 	/https?:\/\/(?:www\.)?youtu(?:\.be|be\.com)\/(?:channel|c|user)\/.+/;
 
-class Site extends React.Component {
-	onEditClicked = (event) => {
-		this.props.openEditModal();
+const Site = ({element, categoryIndex, elementIndex}) =>  {
+	const dispatch = useDispatch();
+
+	const onEditClicked = (event) => {
+		dispatch(openEditSiteModal(categoryIndex, elementIndex));
 		event.preventDefault();	
-	}
+	};
 
-	onDeleteClicked = (event) => {
-		this.props.openDeleteModal();
+	const onDeleteClicked = (event) => {
+		dispatch(openDeleteSiteModal(categoryIndex, elementIndex));
 		event.preventDefault();	
-	}
+	};
 
-	isYouTubeChannel = () => YOUTUBE_CHANNEL_PATTERN.test(this.props.element.url);
+	const isYouTubeChannel = YOUTUBE_CHANNEL_PATTERN.test(element.url);
 
-	getBaseLink = () =>
-		this.props.element.url + (this.isYouTubeChannel() ? VIDEOS_SUFFIX : "");
+	const baseLink = element.url + (isYouTubeChannel ? VIDEOS_SUFFIX : "");
 
-	render(){
-		return(
-			<div className="site">
-				<NewTabLink url={this.getBaseLink()}>
-					<div className="img-container">
-						<img
-							className="icon"
-							src={this.props.element.icon} alt="" />
-						<div className="edit-button" onClick={this.onEditClicked}
-							alt="Edit Site" title="Edit Site">
-							<FontAwesomeIcon icon={faPencilAlt} />
-						</div>
-						<div className="delete-button" onClick={this.onDeleteClicked}
-							alt="Delete Site" title="Delete Site">
-							<FontAwesomeIcon icon={faTrash} />
-						</div>
+	const NewTabLink = ({url, children}) => (
+		<a href={url} target="_blank" rel="noopener noreferrer">
+			{children}
+		</a>
+	);
+
+	return(
+		<div className="site">
+			<NewTabLink url={baseLink}>
+				<div className="img-container">
+					<img
+						className="icon"
+						src={element.icon} alt="" />
+					<div className="edit-button" onClick={onEditClicked}
+						alt="Edit Site" title="Edit Site">
+						<FontAwesomeIcon icon={faPencilAlt} />
 					</div>
-				</NewTabLink>
-				<div className="site-title">
-					{this.props.element.name}{" "}
+					<div className="delete-button" onClick={onDeleteClicked}
+						alt="Delete Site" title="Delete Site">
+						<FontAwesomeIcon icon={faTrash} />
+					</div>
 				</div>
-				{ this.isYouTubeChannel() &&
-					<div className="site-links">
-						<NewTabLink url={this.props.element.url + VIDEOS_SUFFIX}>
-							Videos
-						</NewTabLink>
-						<NewTabLink url={this.props.element.url + PLAYLISTS_SUFFIX}>
-							Playlists
-						</NewTabLink>
-					</div>
-				}
+			</NewTabLink>
+			<div className="site-title">
+				{element.name}{" "}
 			</div>
-		);
-	}
+			{ isYouTubeChannel &&
+				<div className="site-links">
+					<NewTabLink url={element.url + VIDEOS_SUFFIX}>
+						Videos
+					</NewTabLink>
+					<NewTabLink url={element.url + PLAYLISTS_SUFFIX}>
+						Playlists
+					</NewTabLink>
+				</div>
+			}
+		</div>
+	);
 }
 
-const NewTabLink = ({url, children}) => (
-	<a href={url} target="_blank" rel="noopener noreferrer">
-		{children}
-	</a>
-)
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-	openEditModal: () => dispatch(
-		openEditSiteModal(ownProps.categoryIndex, ownProps.elementIndex)
-	),
-	openDeleteModal: () => dispatch(
-		openDeleteSiteModal(ownProps.categoryIndex, ownProps.elementIndex)
-	),
-})
-
-export default connect(null, mapDispatchToProps)(Site);
+export default Site;
