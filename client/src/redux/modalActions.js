@@ -1,4 +1,3 @@
-import { OPEN_MODAL, CLOSE_MODAL } from './actionTypes';
 import {
 	ADD_SITE,
 	EDIT_SITE,
@@ -13,6 +12,9 @@ import {
 	DELETE_TASK_CATEGORY,
 	EDIT_TITLE
 } from '../modal/modalTypes';
+
+export const OPEN_MODAL = "OPEN_MODAL";
+export const CLOSE_MODAL = "CLOSE_MODAL";
 
 export const openAddSiteModal = (category) => ({
 	type: OPEN_MODAL,

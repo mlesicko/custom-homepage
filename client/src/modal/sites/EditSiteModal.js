@@ -6,7 +6,7 @@ import {
 	ModalBody,
 	ModalFooter,
 } from "reactstrap";
-import { updateSite } from "../../redux/apiActions";
+import { updateSite } from "../../redux/dataActions";
 import ModalInput from "../ModalInput";
 
 const EditSiteModal = ({close}) => {
@@ -39,7 +39,6 @@ const EditSiteModal = ({close}) => {
 	const submit = () => {
 		dispatch(
 			updateSite(
-				data,
 				previousCategoryIndex,
 				category,
 				previousSiteIndex,

@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Button, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { deleteSiteCategory } from "../../redux/apiActions";
+import { deleteSiteCategory } from "../../redux/dataActions";
 
 const DeleteCategoryModal = ({close}) => {
 	const dispatch = useDispatch();
@@ -9,7 +9,7 @@ const DeleteCategoryModal = ({close}) => {
 	const category = data.siteCategories[categoryIndex];
 
 	const submit = () => {
-		dispatch(deleteSiteCategory(data, categoryIndex));
+		dispatch(deleteSiteCategory(categoryIndex));
 		close();
 	};
 

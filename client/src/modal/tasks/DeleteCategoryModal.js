@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Button, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { deleteTaskCategory } from "../../redux/apiActions";
+import { deleteTaskCategory } from "../../redux/dataActions";
 
 const DeleteCategoryModal = ({close}) => {
 	const dispatch = useDispatch();
@@ -10,7 +10,7 @@ const DeleteCategoryModal = ({close}) => {
 	const category = data.taskCategories[categoryIndex];
 
 	const submit = () => {
-		dispatch(deleteTaskCategory(data, categoryIndex));
+		dispatch(deleteTaskCategory(categoryIndex));
 		close();
 	};
 

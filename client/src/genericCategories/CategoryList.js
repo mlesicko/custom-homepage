@@ -1,6 +1,6 @@
 import { Button } from "reactstrap";
 
-const CategoryList = ({categories, CategoryType, onAddCategory, data}) => (
+const CategoryList = ({categories, CategoryType, onAddCategory}) => (
 	<div style={{display: "grid"}}>
 		{ categories.map((category, idx) =>
 			<CategoryType
@@ -9,7 +9,6 @@ const CategoryList = ({categories, CategoryType, onAddCategory, data}) => (
 				categoryIndex={idx}
 				isFirst={idx === 0}
 				isLast={idx === categories.length - 1}
-				data={data}
 			/>
 		)}
 		<Button 

@@ -6,7 +6,7 @@ import {
 	ModalBody,
 	ModalFooter,
 } from "reactstrap";
-import { updateTask, deleteTask } from "../../redux/apiActions";
+import { updateTask, deleteTask } from "../../redux/dataActions";
 import ModalInput from "../ModalInput";
 
 const TaskModal = ({close}) => {
@@ -34,7 +34,6 @@ const TaskModal = ({close}) => {
 	const submit = () => {
 		dispatch(
 			updateTask(
-				data, 
 				previousCategoryIndex, 
 				category,
 				previousTaskIndex, 
@@ -46,7 +45,7 @@ const TaskModal = ({close}) => {
 	}
 
 	const deleteAndClose = () => {
-		dispatch(deleteTask(data, previousCategoryIndex, previousTaskIndex));
+		dispatch(deleteTask(previousCategoryIndex, previousTaskIndex));
 		close();
 	}
 			

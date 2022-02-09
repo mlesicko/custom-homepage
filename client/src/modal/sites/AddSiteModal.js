@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { addSite } from "../../redux/apiActions";
+import { addSite } from "../../redux/dataActions";
 import ModalInput from "../ModalInput";
 
 const AddSiteModal = ({close}) => {
 	const dispatch = useDispatch();
 
-	const data = useSelector((state) => state.data.content);
 	const categoryIndex = useSelector((state) => state.modalState.category);
 	const [name, setName] = useState("");
 	const [url, setUrl] = useState("");
@@ -16,7 +15,7 @@ const AddSiteModal = ({close}) => {
 	const valid = name !== "" && url !== "" && icon !== "";
 
 	const submit = () => {
-		dispatch(addSite(data, categoryIndex, {name, url, icon}))
+		dispatch(addSite(categoryIndex, {name, url, icon}))
 		close();
 	}
 

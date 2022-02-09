@@ -12,7 +12,6 @@ const TasksPage = () => {
 			categories={data.taskCategories}
 			CategoryType={TaskCategory}
 			onAddCategory={() => dispatch(openAddTaskCategoryModal())}
-			data={data}
 		/>
 	);
 };

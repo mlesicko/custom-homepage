@@ -6,7 +6,7 @@ import {
 	ModalBody,
 	ModalFooter,
 } from "reactstrap";
-import { updateTaskCategory } from "../../redux/apiActions";
+import { updateTaskCategory } from "../../redux/dataActions";
 import ModalInput from "../ModalInput";
 
 const EditCategoryModal = ({close}) => {
@@ -21,7 +21,7 @@ const EditCategoryModal = ({close}) => {
 	const valid = name !== "";
 
 	const submit = () => {
-		dispatch(updateTaskCategory(data, categoryIndex, {...category, name}));
+		dispatch(updateTaskCategory(categoryIndex, {...category, name}));
 		close();
 	};
 

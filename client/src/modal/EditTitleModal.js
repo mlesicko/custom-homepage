@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, ModalBody, ModalFooter } from "reactstrap";
-import { updateTitle } from "../redux/apiActions";
+import { updateTitle } from "../redux/dataActions";
 import ModalInput from "./ModalInput";
 
 const EditTitleModal = ({ close }) => {
@@ -24,7 +24,6 @@ const EditTitleModal = ({ close }) => {
 
 	const submit = () => {
 		dispatch(updateTitle(
-			data,
 			{
 				part_1,
 				part_2,

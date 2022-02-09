@@ -1,25 +1,24 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
 	Button,
 	ModalHeader,
 	ModalBody,
 	ModalFooter,
 } from "reactstrap";
-import { addTaskCategory } from "../../redux/apiActions";
+import { addTaskCategory } from "../../redux/dataActions";
 import ModalInput from "../ModalInput";
 
 const AddCategoryModal = ({close}) => {
 	const dispatch = useDispatch();
 
-	const data = useSelector((state) => state.data.content);
 
 	const [name, setName] = useState("");
 
 	const valid = name !== "";
 
 	const submit = () => {
-		dispatch(addTaskCategory(data, { elements: [], name }));
+		dispatch(addTaskCategory({ elements: [], name }));
 		close();
 	};
 

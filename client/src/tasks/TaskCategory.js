@@ -5,7 +5,7 @@ import {
 	openDeleteTaskCategoryModal,
 	openAddTaskModal,
 } from "../redux/modalActions";
-import { moveTaskCategory } from "../redux/apiActions";
+import { moveTaskCategory } from "../redux/dataActions";
 
 import Category from "../genericCategories/Category";
 import Task from "./Task";
@@ -14,14 +14,14 @@ const TaskCategory = (props) => (
 	<Category {...props} CategoryElement={Task} />
 );
 
-const mapDispatchToProps = (dispatch, {data, categoryIndex}) => ({
+const mapDispatchToProps = (dispatch, {categoryIndex}) => ({
     openEditModal: () => dispatch(openEditTaskCategoryModal(categoryIndex)),
     openDeleteModal: () => dispatch(openDeleteTaskCategoryModal(categoryIndex)),
     openAddElementModal: () => dispatch(openAddTaskModal(categoryIndex)),
     moveCategoryUp: () =>
-        dispatch(moveTaskCategory(data, categoryIndex, categoryIndex - 1)),
+        dispatch(moveTaskCategory(categoryIndex, categoryIndex - 1)),
     moveCategoryDown: () =>
-        dispatch(moveTaskCategory(data, categoryIndex, categoryIndex + 1))
+        dispatch(moveTaskCategory(categoryIndex, categoryIndex + 1))
 
 });
 

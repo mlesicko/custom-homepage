@@ -13,7 +13,6 @@ const SitesPage = () => {
 			categories={data.siteCategories}
 			CategoryType={SiteCategory}
 			onAddCategory={() => dispatch(openAddSiteCategoryModal())}
-			data={data}
 		/>
 	);
 };
