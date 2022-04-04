@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
 
-import { openEditTitleModal } from "./redux/modalActions";
+import { openEditTitleModal } from "../redux/modalActions";
 
 const PageTitle = () => {
 	const dispatch = useDispatch();

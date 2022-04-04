@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import SitesPage from "./sites/SitesPage";
 import TasksPage from "./tasks/TasksPage";
-import PageTitle from "./PageTitle";
+import TitleBar from "./title/TitleBar";
 import Navigation from "./Navigation";
 
 const CustomHomepageRoutes = () => (
@@ -18,7 +18,7 @@ const CustomHomepageRoutes = () => (
 
 const Base = () => (
 	<>
-		<PageTitle />
+		<TitleBar />
 		<Navigation />
 		<Outlet />
 	</>
