@@ -1,0 +1,9 @@
+.search-bar-container {
+	display: flex;
+	justify-content: center;
+}
+
+.search-bar-container > .search-bar {
+	max-width: 75%;
+	min-width: min(500px, 90%);
+}
