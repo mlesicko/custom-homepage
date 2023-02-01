@@ -8,7 +8,7 @@ const VIDEOS_SUFFIX = "/videos";
 const PLAYLISTS_SUFFIX = "/playlists?view=1&sort=lad&flow=grid";
 
 const YOUTUBE_CHANNEL_PATTERN =
-	/https?:\/\/(?:www\.)?youtu(?:\.be|be\.com)\/(?:channel|c|user)\/.+/;
+	/https?:\/\/(?:www\.)?youtu(?:\.be|be\.com)\/(?:channel\/|c\/|user\/|@).+/;
 
 const Site = ({element, categoryIndex, elementIndex}) =>  {
 	const dispatch = useDispatch();
