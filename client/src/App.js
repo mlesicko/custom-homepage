@@ -22,7 +22,7 @@ const App = () => {
 	const content = useSelector((state) => state.data.content);
 	const error = useSelector((state) => state.data.error);
 
-	useEffect(() => content && pushData(content), [content]);
+	useEffect(() => { content && pushData(content) }, [content]);
 
 	const innerContent = (() => {
 		if (loading || content === null) {

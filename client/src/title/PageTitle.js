@@ -10,8 +10,8 @@ const PageTitle = () => {
 	const dispatch = useDispatch();
 	const title = useSelector((state) => state.data?.content?.title);
 
-	useEffect(() =>
-		document.title = title?.page_title ?? "Custom Homepage",
+	useEffect(
+		() => {document.title = title?.page_title ?? "Custom Homepage"},
 		[title]
 	);
 

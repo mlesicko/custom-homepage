@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const { JsonDB } = require("node-json-db");
 const { Config } = require("node-json-db/dist/lib/JsonDBConfig");
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 39007;
 
 const db = new JsonDB(new Config("data", true, true, "/"));
 
